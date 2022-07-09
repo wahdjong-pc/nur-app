@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Data Siswa</title>
+  <title>Data SPP</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -46,7 +46,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="data-siswa.html" class="brand-link">
+    <a href="data-spp.html" class="brand-link">
       <span class="brand-text font-weight-light">APP SPP & ANGSURAN</span>
     </a>
 
@@ -83,13 +83,13 @@
               </li>
 
               <li class="nav-item">
-                <a href="data-siswa.html" class="nav-link active">
+                <a href="data-siswa.html" class="nav-link ">
                   <p>Data Siswa</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-spp.html" class="nav-link">
+                <a href="data-spp.html" class="nav-link active">
                   <p>Data Pembayaran SPP</p>
                 </a>
               </li>
@@ -115,7 +115,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Data <b>Siswa</b></h1>
+            <h1 class="m-0">Data <b>Pembayaran SPP</b></h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -125,16 +125,37 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Tambah data siswa</h3>
-              </div>
 
-              <form action="proses/proses_tambah.php" id="formUser">
-              <div class="card-body">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Tambah Data Pembayaran SPP</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <form action="proses/proses_tambah.php" id="formUser">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Kode Pembayaran :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" value="P001" class="form-control" id="kodebayar" name="kodebayar" disabled>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
 
                 <div class="form-group">
                   <label>Nis :</label>
@@ -163,120 +184,124 @@
                 <!-- /.form group -->
 
                 <div class="form-group">
-                  <label>Jenis Kelamin :</label>
-
-                  <div class="form-group">
-                    <select class="custom-select form-control-border" id="gender" name="gender">
-                      <option value="" hidden>Pilih Jenis Kelamin</option>
-                      <option value="Laki - Laki">Laki - Laki</option>
-                      <option value="Perempuan">Perempuan</option>
-                    </select>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-
-                <div class="form-group">
-                  <label>Tanggal Lahir :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>Alamat :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="text" class="form-control" id="alamat" name="alamat">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
                   <label>Kelas :</label>
 
-                  <div class="form-group">
-                    <select class="custom-select form-control-border" id="kelas" name="kelas">
-                      <option value="" hidden>Pilih Kelas</option>
-                      <option value="1.A">1.A</option>
-                      <option value="1.B">1.B</option>
-                      <option value="1.B">1.B</option>
-                      <option value="2.A">2.A</option>
-                      <option value="2.B">2.B</option>
-                      <option value="2.C">2.C</option>
-                      <option value="3.A">3.A</option>
-                      <option value="3.B">3.B</option>
-                      <option value="3.C">3.C</option>
-                      <option value="4.A">4.A</option>
-                      <option value="4.B">4.B</option>
-                      <option value="4.C">4.C</option>
-                      <option value="5.A">5.A</option>
-                      <option value="5.B">5.B</option>
-                      <option value="5.C">5.C</option>
-                      <option value="6.A">6.A</option>
-                      <option value="6.B">6.B</option>
-                      <option value="6.C">6.C</option>
-                    </select>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="kelas" name="kelas">
                   </div>
                   <!-- /.input group -->
+                  
                 </div>
                 <!-- /.form group -->
 
                 <div class="form-group">
                   <label>Semester :</label>
 
-                  <div class="form-group">
-                    <select class="custom-select form-control-border" id="semester" name="semester">
-                      <option value="" hidden>Pilih Semester</option>
-                      <option value="Semester 1">Semester 1</option>
-                      <option value="Semester 2">Semester 2</option>
-                      <option value="Semester 3">Semester 3</option>
-                      <option value="Semester 4">Semester 4</option>
-                      <option value="Semester 5">Semester 5</option>
-                      <option value="Semester 6">Semester 6</option>
-                    </select>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="semester" name="semester">
                   </div>
                   <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+              </div>
+
+              <!-- /.col -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Status :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="status" name="status">
+                  </div>
+                  <!-- /.input group -->
+
                 </div>
                 <!-- /.form group -->
 
                 <div class="form-group">
-                  <label>Status :</label>
+                  <label>Tanggal Bayar :</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="date" class="form-control" id="tgl_bayar" name="tgl_bayar">
+                  </div>
+                  <!-- /.input group -->
+                  
+                </div>
+                <!-- /.input group -->
+
+
+                <div class="form-group">
+                  <label>Bulan :</label>
 
                   <div class="form-group">
-                    <select class="custom-select form-control-border" id="status" name="status">
-                      <option value="" hidden>Pilih Status</option>
-                      <option value="Aktif">Aktif</option>
-                      <option value="Tidak Aktif">Tidak Aktif</option>
+                    <select class="custom-select form-control-border" id="bulan" name="bulan">
+                      <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
                     </select>
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
-                
 
-                <button type="submit" class="btn btn-block btn-outline-primary">Tambah Data</button>
+
+                <div class="form-group">
+                  <label>Tahun :</label>
+
+                  <div class="form-group">
+                    <select class="custom-select form-control-border" id="tahun" name="tahun">
+                      <option value="" hidden>Pilih Tahun</option>
+                      <option value="2022">2022</option>
+                      <option value="2023">2023</option>
+                      <option value="2024">2023</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                      <option value="2027">2027</option>
+                      <option value="2028">2028</option>
+                      <option value="2029">2029</option>
+                      <option value="2030">2030</option>
+                      <option value="2031">2031</option>
+                      <option value="2032">2032</option>
+                      <option value="2033">2033</option>
+                      <option value="2034">2034</option>
+                      <option value="2035">2035</option>
+                      <option value="2036">2036</option>
+                    </select>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+                <button type="submit" class="btn btn-block btn-outline-primary">Tambah Data Pembayaran</button>
               </div>
-              <!-- /.card-body -->
-            </form>
+              <!-- /.col -->
             </div>
-            <!-- /.card -->
+            <!-- /.row -->
           </div>
+          <!-- /.card-body -->
+        </form>
         </div>
-        <!-- /.row -->
-
-        
+        <!-- /.card -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -292,36 +317,37 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-hover">
-                  <thead style="background-color: #007bff28">
+                  <thead>
                   <tr>
                     <th style="width: 2%;">No.</th>
+                    <th>KODE PEMBAYARAN</th>
                     <th>NIS</th>
                     <th>NAMA</th>
-                    <th>JENIS KELAMIN</th>
-                    <th>TANGGAL LAHIR</th>
-                    <th>ALAMAT</th>
                     <th>KELAS</th>
                     <th>SEMESTER</th>
                     <th>STATUS</th>
-                    <th style="width: 15%;">AKSI</th>
+                    <th>TANGGAL BAYAR</th>
+                    <th>BULAN</th>
+                    <th>TAHUN</th>
+                    <th>AKSI</th>
                   </tr>
                   </thead>
                   <tbody>
                   
                   <tr>
                     <td>1.</td>
+                    <td>P001</td>
                     <td>001</td>
                     <td>Wahyu Pratama</td>
-                    <td>Laki - Laki</td>
-                    <td>12 April 2020</td>
-                    <td>Jln. Nuri Palembang</td>
                     <td>1.A</td>
                     <td>Semester 1</td>
                     <td>Aktif</td>
-                    <td>
+                    <td>12 Agustus 2020</td>
+                    <td>Agustus</td>
+                    <td>2022</td>
+                    <td style="width: 10%;">
                       <a href="#" class="btn btn-outline-primary btn-sm">Edit</a> 
                       <a href="#" class="btn btn-outline-danger btn-sm">Hapus</a>
-                      <a href="#" type="button" class="btn btn-outline-dark btn-sm">Rekapitulasi</a>
                     </td>
                   </tr>
                   </tbody>
@@ -396,15 +422,6 @@
       nama: {
         required: true,
       },
-      gender: {
-        required: true,
-      },
-      tgl_lahir: {
-        required: true,
-      },
-      alamat: {
-        required: true,
-      },
       kelas: {
         required: true,
       },
@@ -412,6 +429,15 @@
         required: true,
       },
       status: {
+        required: true,
+      },
+      tgl_bayar: {
+        required: true,
+      },
+      bulan: {
+        required: true,
+      },
+      tahun: {
         required: true,
       },
     },
@@ -424,15 +450,6 @@
       nama: {
         required: "Mohon diisi nama nya!",
       },
-      gender: {
-        required: "Mohon dipilih jenis kelamin nya!",
-      },
-      tgl_lahir: {
-        required: "Mohon dipilih tanggal lahir nya!",
-      },
-      alamat: {
-        required: "Mohon diisi alamat nya!",
-      },
       kelas: {
         required: "Mohon dipilih kelas nya!",
       },
@@ -441,6 +458,15 @@
       },
       status: {
         required: "Mohon dipilih status nya!",
+      },
+      tgl_bayar: {
+        required: "Mohon diisi tanggal bayar nya!",
+      },
+      bulan: {
+        required: "Mohon dipilih bulan nya!",
+      },
+      tahun: {
+        required: "Mohon dipilih tahun nya!",
       },
     },
     errorElement: 'span',
