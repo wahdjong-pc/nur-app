@@ -253,13 +253,13 @@
                   <!-- /.form group -->
   
                   <div class="form-group">
-                    <label>Status :</label>
+                    <label>Status SPP:</label>
   
                     <div class="form-group">
-                      <select class="custom-select form-control-border" id="status" name="status">
+                      <select class="custom-select form-control-border" id="status_spp" name="status_spp">
                         <option value="" hidden>Pilih Status</option>
-                        <option value="Aktif">Aktif</option>
-                        <option value="Tidak Aktif">Tidak Aktif</option>
+                        <option value="Proses">Proses</option>
+                        <option value="Selesai">Selesai</option>
                       </select>
                     </div>
                     <!-- /.input group -->
@@ -296,7 +296,8 @@
                     <th>ALAMAT</th>
                     <th>KELAS</th>
                     <th>SEMESTER</th>
-                    <th>STATUS</th>
+                    <th>STATUS SPP</th>
+                    <th>STATUS ANGSURAN</th>
                     <th style="width: 15%;">AKSI</th>
                   </tr>
                   </thead>
@@ -308,10 +309,11 @@
                     <td>Wahyu Pratama</td>
                     <td>Laki - Laki</td>
                     <td>12 April 2020</td>
-                    <td>Jln. Nuri Palembang</td>
+                    <td>Jln. Nuri Palembang </td>
                     <td>1.A</td>
                     <td>Semester 1</td>
-                    <td>Aktif</td>
+                    <td>Proses / Selesai</td>
+                    <td>Proses / Selesai</td>
                     <td>
                       <a href="#" class="btn btn-outline-primary btn-sm">Edit</a> 
                       <a href="#" class="btn btn-outline-danger btn-sm">Hapus</a>
@@ -405,7 +407,7 @@
       semester: {
         required: true,
       },
-      status: {
+      status_spp: {
         required: true,
       },
     },
@@ -433,8 +435,8 @@
       semester: {
         required: "Mohon dipilih semester nya!",
       },
-      status: {
-        required: "Mohon dipilih status nya!",
+      status_spp: {
+        required: "Mohon dipilih status spp nya!",
       },
     },
     errorElement: 'span',
