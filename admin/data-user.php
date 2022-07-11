@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+
+  <!-- SweatAlert -->
+  <link rel="stylesheet" href="../sweatalert/dist/sweetalert2.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
 <div class="wrapper">
@@ -77,7 +80,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="data-user.html" class="nav-link active">
+                <a href="data-user.php" class="nav-link active">
                   <p>Data User</p>
                 </a>
               </li>
@@ -133,7 +136,7 @@
                 <h3 class="card-title">Tambah data user</h3>
               </div>
 
-              <form action="proses/proses_tambah.php" id="formUser">
+              <form action="proses-user/proses_tambah.php" id="formUser" method="post">
               <div class="card-body">
 
                 <div class="form-group">
@@ -188,7 +191,7 @@
                 </div>
                 <!-- /.form group -->
 
-                <button type="submit" class="btn btn-block btn-outline-primary">Tambah Data</button>
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Tambah Data</button>
               </div>
               <!-- /.card-body -->
             </form>
@@ -297,6 +300,9 @@
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
 
+<!-- SweetAlert -->
+<script src="../sweatalert/dist/sweetalert2.all.min.js"></script>
+
 <!-- Page specific script -->
 <script>
   $(function () {
@@ -306,11 +312,6 @@
   });
 
   $(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
   $('#formUser').validate({
     rules: {
       nama: {
@@ -355,6 +356,9 @@
     }
   });
 });
+
+
+
 </script>
 </body>
 </html>
