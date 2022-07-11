@@ -205,13 +205,27 @@
               <!-- /.col -->
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Status :</label>
+                  <label>Status SPP :</label>
 
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="status" name="status">
+                    <input type="text" class="form-control" id="status_spp" name="status_spp">
+                  </div>
+                  <!-- /.input group -->
+
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Jumlah Bayar :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar">
                   </div>
                   <!-- /.input group -->
 
@@ -233,7 +247,7 @@
 
 
                 <div class="form-group">
-                  <label>Bulan :</label>
+                  <label>Untuk Bulan :</label>
 
                   <div class="form-group">
                     <select class="custom-select form-control-border" id="bulan" name="bulan">
@@ -421,7 +435,10 @@
       semester: {
         required: true,
       },
-      status: {
+      status_spp: {
+        required: true,
+      },
+      jumlah_bayar: {
         required: true,
       },
       tgl_bayar: {
@@ -433,6 +450,7 @@
       tahun: {
         required: true,
       },
+      
     },
     messages: {
       nis: {
@@ -449,8 +467,11 @@
       semester: {
         required: "Mohon dipilih semester nya!",
       },
-      status: {
+      status_spp: {
         required: "Mohon dipilih status nya!",
+      },
+      jumlah_bayar: {
+        required: "Mohon diisi jumlah bayar nya!",
       },
       tgl_bayar: {
         required: "Mohon diisi tanggal bayar nya!",

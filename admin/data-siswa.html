@@ -242,10 +242,6 @@
                         <option value="" hidden>Pilih Semester</option>
                         <option value="Semester 1">Semester 1</option>
                         <option value="Semester 2">Semester 2</option>
-                        <option value="Semester 3">Semester 3</option>
-                        <option value="Semester 4">Semester 4</option>
-                        <option value="Semester 5">Semester 5</option>
-                        <option value="Semester 6">Semester 6</option>
                       </select>
                     </div>
                     <!-- /.input group -->
@@ -260,6 +256,20 @@
                         <option value="" hidden>Pilih Status</option>
                         <option value="Proses">Proses</option>
                         <option value="Selesai">Selesai</option>
+                      </select>
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+
+                  <div class="form-group">
+                    <label>Status Angsuran:</label>
+  
+                    <div class="form-group">
+                      <select class="custom-select form-control-border" id="status_angsuran" name="status_angsuran">
+                        <option value="" hidden>Pilih Status Angsuran :</option>
+                        <option value="Ada">Ada</option>
+                        <option value="Tidak Ada">Tidak Ada</option>
                       </select>
                     </div>
                     <!-- /.input group -->
@@ -410,6 +420,9 @@
       status_spp: {
         required: true,
       },
+      status_angsuran: {
+        required: true,
+      },
     },
     messages: {
       nis: {
@@ -437,6 +450,9 @@
       },
       status_spp: {
         required: "Mohon dipilih status spp nya!",
+      },
+      status_angsuran: {
+        required: "Mohon dipilih status angsuran nya!",
       },
     },
     errorElement: 'span',
