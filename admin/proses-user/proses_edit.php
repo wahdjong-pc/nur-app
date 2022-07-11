@@ -11,12 +11,13 @@
 <script src="../../sweatalert/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
- 
 
 <?php
 include '../../koneksi/config.php';
 
 if (isset($_POST['submit'])) {
+
+  $id_user = $_POST['id_user'];
   $nama = $_POST['nama'];
   $jabatan = $_POST['jabatan'];
   $username = $_POST['username'];
@@ -24,14 +25,18 @@ if (isset($_POST['submit'])) {
 
   $pass_hash = password_hash($password, PASSWORD_DEFAULT);
 
-// id_produk bernilai '' karena kita set auto increment
-  $query = $koneksi->query("INSERT INTO tbl_user VALUES ('', '$nama', '$jabatan', '$username', '$pass_hash')");
+$query = $koneksi->query("UPDATE tbl_user SET 
+nama = '$nama', 
+jabatan = '$jabatan', 
+username = '$username', 
+password = '$pass_hash' WHERE id_user = '$id_user'");
+
 if ($query) {
-    // pesan jika data tersimpan
+    // pesan jika data berubah
     echo "<script>
     Swal.fire({
      title: 'Berhasil',
-     text: 'Data user berhasil ditambah!',
+     text: 'Data user berhasil diubah!',
      icon: 'success',
      confirmButtonColor: '#3085d6'
    }).then((result) => {
@@ -41,12 +46,10 @@ if ($query) {
    })
 </script>";
   } else {
-    // pesan jika data gagal disimpan
-    echo "<script>alert('Data user gagal ditambahkan'); window.location.href='../data-user.php'</script>";
+    // pesan jika data gagal diubah
+    echo "<script>alert('Data produk gagal diubah'); window.location.href='index.php'</script>";
   }
 }
-
 ?>
-
 </body>
 </html>

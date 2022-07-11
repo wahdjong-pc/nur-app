@@ -1,3 +1,7 @@
+<?php 
+include '../koneksi/config.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,6 +135,7 @@
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-md-4">
+           <?php if(empty($_GET)) { ?>
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Tambah data user</h3>
@@ -185,7 +190,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password">
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -197,6 +202,88 @@
             </form>
             </div>
             <!-- /.card -->
+            <?php }else{
+
+             $id_user = $_GET['id'];
+             
+             $query = $koneksi->query("SELECT * FROM tbl_user WHERE id_user = '$id_user'");
+
+             foreach($query as $data_user) :
+             
+            ?>
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Edit data user</h3>
+              </div>
+
+              <form action="proses-user/proses_edit.php" id="formUser" method="post">
+              <div class="card-body">
+              <input type="text" hidden value="<?= $id_user; ?>" name="id_user">
+                <div class="form-group">
+                  <label>Nama :</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" value="<?= $data_user['nama']; ?>" class="form-control" id="nama" name="nama">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Jabatan :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" value="<?= $data_user['jabatan']; ?>" class="form-control" id="jabatan" name="jabatan">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Username :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" value="<?= $data_user['username']; ?>" class="form-control" id="username" name="username">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Password :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="password" class="form-control" id="password" name="password">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Edit Data</button>
+              </div>
+              <!-- /.card-body -->
+              <?php endforeach; ?>
+            </form>
+            </div>
+            <!-- /.card -->
+
+
+
+
+
+
+            <?php }?>
           </div>
         </div>
         <!-- /.row -->
@@ -228,29 +315,29 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <?php 
+                  $query = $koneksi->query("SELECT * FROM tbl_user");
                   
+                  $no = 1;
+
+                  while($data = $query->fetch_assoc()) :
+                  
+                  
+                  
+                  ?>
                   <tr>
-                    <td>1.</td>
-                    <td>Wahyu Pratama</td>
-                    <td>Admin</td>
-                    <td>wahdjong</td>
-                    <td>wahdjong0000</td>
+                    <td><?= $no++;?></td>
+                    <td><?= $data['nama']; ?></td>
+                    <td><?= $data['jabatan']; ?></td>
+                    <td><?= $data['username']; ?></td>
+                    <td><?= $data['password']; ?></td>
                     <td>
-                      <button type="button" class="btn btn-outline-primary btn-sm">Edit</button> 
-                      <button type="button" class="btn btn-outline-danger btn-sm">Hapus</button>
+                      <a href="data-user.php?id=<?= $data['id_user']; ?>" class="btn btn-outline-primary btn-sm">Edit</a> 
+                      <button onclick="hapus(<?= $data['id_user']; ?>)" class="btn btn-outline-danger btn-sm">Hapus</button>
                     </td>
                   </tr>
-                  <tr>
-                    <td>2.</td>
-                    <td>Wahyu Pratama</td>
-                    <td>Admin</td>
-                    <td>wahdjong</td>
-                    <td>wahdjong0000</td>
-                    <td>
-                      <button type="button" class="btn btn-outline-primary btn-sm">Edit</button> 
-                      <button type="button" class="btn btn-outline-danger btn-sm">Hapus</button>
-                    </td>
-                  </tr>
+
+                  <?php endwhile; ?>
                   
                   </tbody>
                 </table>
@@ -357,6 +444,20 @@
   });
 });
 
+function hapus(id){
+ Swal.fire({
+  title: 'Apakah anda yakin menghapus data ini?',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Ya'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href='proses-user/proses_hapus.php?id='+id
+  }
+})
+}
 
 
 </script>
