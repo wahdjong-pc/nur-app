@@ -1,3 +1,9 @@
+<?php 
+include '../koneksi/config.php';
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +21,9 @@
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+
+  <!-- SweatAlert -->
+  <link rel="stylesheet" href="../sweatalert/dist/sweetalert2.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
 <div class="wrapper">
@@ -125,13 +134,13 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-
+        <?php if(empty($_GET)) { ?>
         <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Tambah Data Siswa</h3>
           </div>
 
-          <form action="proses/proses_tambah.php" id="formUser">
+          <form action="proses-siswa/proses_tambah.php" id="formUser" method="post">
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
@@ -212,7 +221,7 @@
                         <option value="" hidden>Pilih Kelas</option>
                         <option value="1.A">1.A</option>
                         <option value="1.B">1.B</option>
-                        <option value="1.B">1.B</option>
+                        <option value="1.C">1.C</option>
                         <option value="2.A">2.A</option>
                         <option value="2.B">2.B</option>
                         <option value="2.C">2.C</option>
@@ -247,40 +256,512 @@
                     <!-- /.input group -->
                   </div>
                   <!-- /.form group -->
+
+                  
+                  <button type="submit" name="submit" class="btn btn-block btn-outline-primary">Tambah Data</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+         <!-- End Card -->
+        <?php }else{
+          $id_siswa = $_GET['id'];
+             
+          $query = $koneksi->query("SELECT * FROM tbl_siswa WHERE id_siswa = '$id_siswa'");
+
+          foreach($query as $data_siswa) :
+             
+        ?>
+
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Edit Data Siswa</h3>
+          </div>
+
+          <form action="proses-siswa/proses_edit.php" id="formUser" method="post">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                 <input type="text" hidden value="<?= $id_siswa; ?>" name="id_siswa">
+                  <div class="form-group">
+                    <label>Nis :</label>
+  
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                      </div>
+                      <input type="number" class="form-control" id="nis" name="nis" value="<?= $data_siswa['nis']; ?>" disabled>
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
   
                   <div class="form-group">
-                    <label>Status SPP:</label>
+                    <label>Nama :</label>
+  
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                      </div>
+                      <input type="text" class="form-control" id="nama" name="nama" value="<?= $data_siswa['nama']; ?>">
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+  
+                  <div class="form-group">
+                    <label>Jenis Kelamin :</label>
   
                     <div class="form-group">
-                      <select class="custom-select form-control-border" id="status_spp" name="status_spp">
-                        <option value="" hidden>Pilih Status</option>
-                        <option value="Proses">Proses</option>
-                        <option value="Selesai">Selesai</option>
+                      <select class="custom-select form-control-border" id="gender" name="gender" >
+                        <option value="" hidden>Pilih Jenis Kelamin</option>
+                        <?php if($data_siswa['jenis_kelamin'] == "Laki - Laki"){ ?>
+                         <option value="Laki - Laki" selected>Laki - Laki</option>
+                         <option value="Perempuan">Perempuan</option>
+
+                        <?php }else{ ?>
+                         <option value="Laki - Laki" >Laki - Laki</option>
+                         <option value="Perempuan" selected>Perempuan</option>
+                        <?php } ?>
+                      </select>
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+  
+  
+                  <div class="form-group">
+                    <label>Tanggal Lahir :</label>
+  
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                      </div>
+                      <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" value="<?= $data_siswa['tgl_lahir']; ?>">
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Alamat :</label>
+  
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                      </div>
+                      <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $data_siswa['alamat']; ?>">
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+  
+                  <div class="form-group">
+                    <label>Kelas :</label>
+  
+                    <div class="form-group">
+                      <select class="custom-select form-control-border" id="kelas" name="kelas">
+                        <option value="" hidden>Pilih Kelas</option>
+                        <?php if($data_siswa['kelas'] == "1.A"){ ?>
+                        <option value="1.A" selected>1.A</option>
+                        <option value="1.B">1.B</option>
+                        <option value="1.B">1.B</option>
+                        <option value="2.A">2.A</option>
+                        <option value="2.B">2.B</option>
+                        <option value="2.C">2.C</option>
+                        <option value="3.A">3.A</option>
+                        <option value="3.B">3.B</option>
+                        <option value="3.C">3.C</option>
+                        <option value="4.A">4.A</option>
+                        <option value="4.B">4.B</option>
+                        <option value="4.C">4.C</option>
+                        <option value="5.A">5.A</option>
+                        <option value="5.B">5.B</option>
+                        <option value="5.C">5.C</option>
+                        <option value="6.A">6.A</option>
+                        <option value="6.B">6.B</option>
+                        <option value="6.C">6.C</option>
+
+                        <?php } else if($data_siswa['kelas'] == "1.B"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B" selected>1.B</option>
+                         <option value="1.B">1.B</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "1.C"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C" selected>1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+                        
+                         <?php } else if($data_siswa['kelas'] == "2.A"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A" selected>2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "2.B"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B" selected>2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "2.C"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C" selected>2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "3.A"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A" selected>3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "3.B"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B" selected>3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "3.C"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C" selected>3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "4.A"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A" selected>4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "4.B"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B" selected>4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "4.C"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C" selected>4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "5.A"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A" selected>5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "5.B"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B" selected>5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "5.C"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C" selected>5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "6.A"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A" selected>6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "6.B"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B" selected>6.B</option>
+                         <option value="6.C">6.C</option>
+
+                         <?php } else if($data_siswa['kelas'] == "6.C"){ ?>
+                         <option value="1.A">1.A</option>
+                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
+                         <option value="2.A">2.A</option>
+                         <option value="2.B">2.B</option>
+                         <option value="2.C">2.C</option>
+                         <option value="3.A">3.A</option>
+                         <option value="3.B">3.B</option>
+                         <option value="3.C">3.C</option>
+                         <option value="4.A">4.A</option>
+                         <option value="4.B">4.B</option>
+                         <option value="4.C">4.C</option>
+                         <option value="5.A">5.A</option>
+                         <option value="5.B">5.B</option>
+                         <option value="5.C">5.C</option>
+                         <option value="6.A">6.A</option>
+                         <option value="6.B">6.B</option>
+                         <option value="6.C" selected>6.C</option>
+                         <?php } ?>
+                      </select>
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+  
+                  <div class="form-group">
+                    <label>Semester :</label>
+  
+                    <div class="form-group">
+                      <select class="custom-select form-control-border" id="semester" name="semester">
+                        <option value="" hidden>Pilih Semester</option>
+                        <?php if($data_siswa['semester'] == "Semester 1"){ ?>
+                         <option value="Semester 1" selected>Semester 1</option>
+                         <option value="Semester 2">Semester 2</option>
+
+                        <?php }else{ ?>
+                         <option value="Semester 1">Semester 1</option>
+                         <option value="Semester 2" selected>Semester 2</option>
+                        <?php } ?>
+                        
                       </select>
                     </div>
                     <!-- /.input group -->
                   </div>
                   <!-- /.form group -->
 
-                  <div class="form-group">
-                    <label>Status Angsuran:</label>
-  
-                    <div class="form-group">
-                      <select class="custom-select form-control-border" id="status_angsuran" name="status_angsuran">
-                        <option value="" hidden>Pilih Status Angsuran :</option>
-                        <option value="Ada">Ada</option>
-                        <option value="Tidak Ada">Tidak Ada</option>
-                      </select>
-                    </div>
-                    <!-- /.input group -->
-                  </div>
-                  <!-- /.form group -->
-                  <button type="submit" class="btn btn-block btn-outline-primary">Tambah Data</button>
+                  
+                  <button type="submit" name="submit" class="btn btn-block btn-outline-primary">Edit Data</button>
                 </div>
               </div>
             </div>
+            <?php endforeach; ?>
           </form>
         </div>
+         <!-- End Card -->
+        <?php } ?>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -307,29 +788,40 @@
                     <th>KELAS</th>
                     <th>SEMESTER</th>
                     <th>STATUS SPP</th>
-                    <th>STATUS ANGSURAN</th>
+                    <th>STATUS ANGSURAN DAFTAR ULANG</th>
                     <th style="width: 15%;">AKSI</th>
                   </tr>
                   </thead>
                   <tbody>
+                  <?php 
+                  $query = $koneksi->query("SELECT * FROM tbl_siswa");
                   
+                  $no = 1;
+
+                  while($data = $query->fetch_assoc()) :
+                  
+                  
+                  
+                  ?>
                   <tr>
-                    <td>1.</td>
-                    <td>001</td>
-                    <td>Wahyu Pratama</td>
-                    <td>Laki - Laki</td>
-                    <td>12 April 2020</td>
-                    <td>Jln. Nuri Palembang </td>
-                    <td>1.A</td>
-                    <td>Semester 1</td>
-                    <td>Proses / Selesai</td>
-                    <td>Proses / Selesai</td>
+                    <td><?= $no++; ?></td>
+                    <td><?= $data['nis']; ?></td>
+                    <td><?= $data['nama']; ?></td>
+                    <td><?= $data['jenis_kelamin']; ?></td>
+                    <td><?= $data['tgl_lahir']; ?></td>
+                    <td><?= $data['alamat']; ?></td>
+                    <td><?= $data['kelas']; ?></td>
+                    <td><?= $data['semester']; ?></td>
+                    <td><?= $data['status_spp']; ?></td>
+                    <td><?= $data['status_angsuran']; ?></td>
                     <td>
-                      <a href="#" class="btn btn-outline-primary btn-sm">Edit</a> 
-                      <a href="#" class="btn btn-outline-danger btn-sm">Hapus</a>
+                      <a href="data-siswa.php?id=<?= $data['id_siswa']; ?>" class="btn btn-outline-primary btn-sm">Edit</a> 
+                      <button onclick="hapus(<?= $data['id_siswa']; ?>)" class="btn btn-outline-danger btn-sm">Hapus</button>
                       <a href="#" type="button" class="btn btn-outline-dark btn-sm">Rekapitulasi</a>
                     </td>
                   </tr>
+                  <?php endwhile; ?>
+
                   </tbody>
                 </table>
               </div>
@@ -378,6 +870,9 @@
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
 
+<!-- SweetAlert -->
+<script src="../sweatalert/dist/sweetalert2.all.min.js"></script>
+
 <!-- Page specific script -->
 <script>
   $(function () {
@@ -387,11 +882,6 @@
   });
 
   $(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
   $('#formUser').validate({
     rules: {
       nis: {
@@ -416,13 +906,7 @@
       },
       semester: {
         required: true,
-      },
-      status_spp: {
-        required: true,
-      },
-      status_angsuran: {
-        required: true,
-      },
+      }
     },
     messages: {
       nis: {
@@ -448,12 +932,6 @@
       semester: {
         required: "Mohon dipilih semester nya!",
       },
-      status_spp: {
-        required: "Mohon dipilih status spp nya!",
-      },
-      status_angsuran: {
-        required: "Mohon dipilih status angsuran nya!",
-      },
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {
@@ -468,6 +946,21 @@
     }
   });
 });
+
+function hapus(id){
+ Swal.fire({
+  title: 'Apakah anda yakin menghapus data ini?',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Ya'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href='proses-siswa/proses_hapus.php?id='+id
+  }
+})
+}
 </script>
 </body>
 </html>
