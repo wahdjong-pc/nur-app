@@ -1,3 +1,7 @@
+<?php 
+include '../koneksi/config.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,18 +135,43 @@
             <h3 class="card-title">Tambah Data Pembayaran SPP</h3>
           </div>
           <!-- /.card-header -->
-          <form action="proses/proses_tambah.php" id="formUser">
+          <?php
+
+          // mengambil kode bayar dengan kode paling besar
+          $query = $koneksi->query("SELECT max(kode_bayar) as kodeBayar FROM tbl_spp");
+
+          $data_kode = mysqli_fetch_array($query);
+          $kode_bayar = $data_kode['kodeBayar'];
+          
+          // mengambil angka dari kode barang terbesar, menggunakan fungsi substr
+          // dan diubah ke integer dengan (int)
+          $urutan = (int) substr($kode_bayar, 8, 8);
+          
+          // bilangan yang diambil ini ditambah 1 untuk menentukan nomor urut berikutnya
+          $urutan++;
+          
+          // membentuk kode barang baru
+          // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+          // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+          // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan, misalnya BRG 
+          $tgl = date("dny");
+          $huruf = "T-". $tgl;
+          
+          $kode_bayar = $huruf . sprintf("%08s", $urutan);
+          
+          
+          ?>
+          <form action="proses-spp/proses_tambah.php" id="formUser" method="post">
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Kode Pembayaran :</label>
-
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" value="P001" class="form-control" id="kodebayar" name="kodebayar" disabled>
+                    <input type="text" value="<?= $kode_bayar;?>" class="form-control" id="kodebayar" name="kodebayar" readonly>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -155,7 +184,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="number" class="form-control" id="nis" name="nis">
+                    <input type="number" class="form-control" id="nis" name="nis" onkeyup="isi_otomatis()">
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -168,7 +197,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="nama" name="nama">
+                    <input type="text" class="form-control" id="nama" name="nama" readonly>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -181,7 +210,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="kelas" name="kelas">
+                    <input type="text" class="form-control" id="kelas" name="kelas" readonly>
                   </div>
                   <!-- /.input group -->
                   
@@ -195,7 +224,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="semester" name="semester">
+                    <input type="text" class="form-control" id="semester" name="semester" readonly>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -211,7 +240,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="status_spp" name="status_spp">
+                    <input type="text" class="form-control" id="status_spp" name="status_spp" readonly>
                   </div>
                   <!-- /.input group -->
 
@@ -223,7 +252,7 @@
 
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                      <span class="input-group-text">Rp.</span>
                     </div>
                     <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar">
                   </div>
@@ -296,8 +325,9 @@
                   </div>
                   <!-- /.input group -->
                 </div>
+                
                 <!-- /.form group -->
-                <button type="submit" class="btn btn-block btn-outline-primary">Tambah Data Pembayaran</button>
+                <button type="submit" name="submit" class="btn btn-block btn-outline-primary">Tambah Data Pembayaran</button>
               </div>
               <!-- /.col -->
             </div>
@@ -331,6 +361,7 @@
                     <th>KELAS</th>
                     <th>SEMESTER</th>
                     <th>STATUS SPP</th>
+                    <th>NOMINAL</th>
                     <th>TANGGAL BAYAR</th>
                     <th>BULAN</th>
                     <th>TAHUN</th>
@@ -339,24 +370,32 @@
                   </tr>
                   </thead>
                   <tbody>
+                  <?php 
+                  $query = $koneksi->query("SELECT * FROM tbl_spp");
                   
+                  $no = 1;
+
+                  while($data = $query->fetch_assoc()) :
+                  ?>
                   <tr>
-                    <td>1.</td>
-                    <td>P001</td>
-                    <td>001</td>
-                    <td>Wahyu Pratama</td>
-                    <td>1.A</td>
-                    <td>Semester 1</td>
-                    <td>Proses / Selesai</td>
-                    <td>12 Agustus 2020</td>
-                    <td>Agustus</td>
-                    <td>2022</td>
-                    <td>LUNAS</td>
+                    <td><?= $no++; ?></td>
+                    <td><?= $data['kode_bayar'] ?></td>
+                    <td><?= $data['nis'] ?></td>
+                    <td><?= $data['nama'] ?></td>
+                    <td><?= $data['kelas'] ?></td>
+                    <td><?= $data['semester'] ?></td>
+                    <td><?= $data['status_spp'] ?></td>
+                    <td><?= $data['jumlah_bayar'] ?></td>
+                    <td><?= $data['tgl_bayar'] ?></td>
+                    <td><?= $data['bulan'] ?></td>
+                    <td><?= $data['tahun'] ?></td>
+                    <td><?= $data['status_bayar'] ?></td>
                     <td style="width: 10%;">
                       <a href="#" class="btn btn-outline-primary btn-sm">Edit</a> 
                       <a href="#" class="btn btn-outline-danger btn-sm">Hapus</a>
                     </td>
                   </tr>
+                  <?php endwhile; ?>
                   </tbody>
                 </table>
               </div>
@@ -414,11 +453,6 @@
   });
 
   $(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
   $('#formUser').validate({
     rules: {
       nis: {
@@ -496,6 +530,49 @@
     }
   });
 });
+
+function isi_otomatis(){
+                var nis = $("#nis").val();
+                $.ajax({
+                    type:"GET",
+                    url: 'proses-spp/getDataNis.php',
+                    data:"nis="+nis ,
+                    success: function (data) {
+                    var json = data,
+                    obj = JSON.parse(json);
+                    $('#nama').val(obj.nama);
+                    $('#kelas').val(obj.kelas);
+                    $('#semester').val(obj.semester);
+                    $('#status_spp').val(obj.status_spp);
+                }
+                })
+            }
+
+
+// Mengubah format rupiah
+var rupiah = document.getElementById('jumlah_bayar');
+        rupiah.addEventListener('keyup', function(e){
+            // tambahkan 'Rp.' pada saat ketik nominal di form kolom input
+            // gunakan fungsi formatRupiah() untuk mengubah nominal angka yang di ketik menjadi format angka
+            rupiah.value = formatRupiah(this.value);
+        });
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix){
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split           = number_string.split(','),
+            sisa             = split[0].length % 3,
+            rupiah             = split[0].substr(0, sisa),
+            ribuan             = split[0].substr(sisa).match(/\d{3}/gi);
+ 
+            // tambahkan titik jika yang di input sudah menjadi angka satuan ribuan
+            if(ribuan){
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+ 
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
 </script>
 </body>
 </html>

@@ -1,7 +1,5 @@
 <?php 
 include '../koneksi/config.php';
-
-
 ?>
 
 <!DOCTYPE html>
@@ -80,31 +78,31 @@ include '../koneksi/config.php';
           <li class="nav-item menu-open">
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="home.html" class="nav-link">
+                <a href="home.php" class="nav-link">
                   <p>Home</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-user.html" class="nav-link ">
+                <a href="data-user.php" class="nav-link ">
                   <p>Data User</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-siswa.html" class="nav-link active">
+                <a href="data-siswa.php" class="nav-link active">
                   <p>Data Siswa</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-spp.html" class="nav-link">
+                <a href="data-spp.php" class="nav-link">
                   <p>Data Pembayaran SPP</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-angsuran.html" class="nav-link">
+                <a href="data-angsuran.php" class="nav-link">
                   <p>Data Angsuran</p>
                 </a>
               </li>
