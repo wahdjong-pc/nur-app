@@ -27,7 +27,7 @@ include '../../koneksi/config.php';
   $status_spp = "Proses";
   $status_angsuran = "Proses";
 
-$query_cek = $koneksi->query("SELECT * FROM tbl_siswa WHERE nis = '$nis'");
+$query_cek = $koneksi->query("SELECT * FROM tbl_siswa WHERE nis = '$nis' AND kelas = '$kelas' AND semester = '$semester'");
 
   $cek = mysqli_num_rows($query_cek);
   if($cek >= 1){
@@ -35,7 +35,7 @@ $query_cek = $koneksi->query("SELECT * FROM tbl_siswa WHERE nis = '$nis'");
     echo "<script>
     Swal.fire({
      title: 'error',
-     text: 'Data nis tidak boleh sama!',
+     text: 'Data siswa $kelas $semester sudah ada!',
      icon: 'error',
      confirmButtonColor: '#3085d6'
    }).then((result) => {

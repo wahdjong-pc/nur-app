@@ -149,7 +149,7 @@ include '../koneksi/config.php';
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                       </div>
-                      <input type="number" class="form-control" id="nis" name="nis">
+                      <input type="number" class="form-control" id="nis" name="nis" onkeyup="isi_otomatis()">
                     </div>
                     <!-- /.input group -->
                   </div>
@@ -289,7 +289,7 @@ include '../koneksi/config.php';
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                       </div>
-                      <input type="number" class="form-control" id="nis" name="nis" value="<?= $data_siswa['nis']; ?>" disabled>
+                      <input type="number" class="form-control" id="nis" name="nis" value="<?= $data_siswa['nis']; ?>" readonly>
                     </div>
                     <!-- /.input group -->
                   </div>
@@ -959,6 +959,25 @@ function hapus(id){
   }
 })
 }
+
+function isi_otomatis(){
+                var nis = $("#nis").val();
+                $.ajax({
+                    type:"GET",
+                    url: 'proses-siswa/getDataSiswa.php',
+                    data:"nis="+nis ,
+                    success: function (data) {
+                    var json = data,
+                    obj = JSON.parse(json);
+                    $('#nama').val(obj.nama);
+                    $('#gender').val(obj.jk);
+                    $('#tgl_lahir').val(obj.tgl_lahir);
+                    $('#alamat').val(obj.alamat);
+                    $('#kelas').val(obj.kelas);
+                    $('#semester').val(obj.semester);
+                }
+                })
+            }
 </script>
 </body>
 </html>

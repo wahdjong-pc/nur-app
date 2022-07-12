@@ -79,7 +79,7 @@ if ($query) {
      confirmButtonColor: '#3085d6'
    }).then((result) => {
      if (result.isConfirmed) {
-       window.location.href='../data-siswa.php'
+       window.location.href='../data-spp.php'
      }
    })
 </script>";
