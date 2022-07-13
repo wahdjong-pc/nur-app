@@ -75,31 +75,31 @@ include '../koneksi/config.php';
           <li class="nav-item menu-open">
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="home.html" class="nav-link">
+                <a href="home.php" class="nav-link">
                   <p>Home</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-user.html" class="nav-link ">
+                <a href="data-user.php" class="nav-link ">
                   <p>Data User</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-siswa.html" class="nav-link ">
+                <a href="data-siswa.php" class="nav-link ">
                   <p>Data Siswa</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-spp.html" class="nav-link active">
+                <a href="data-spp.php" class="nav-link active">
                   <p>Data Pembayaran SPP</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-angsuran.html" class="nav-link">
+                <a href="data-angsuran.php" class="nav-link">
                   <p>Data Angsuran</p>
                 </a>
               </li>
@@ -129,7 +129,7 @@ include '../koneksi/config.php';
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-
+        <?php if(empty($_GET)) { ?>
         <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Tambah Data Pembayaran SPP</h3>
@@ -306,28 +306,17 @@ include '../koneksi/config.php';
                   <div class="form-group">
                     <select class="custom-select form-control-border" id="tahun" name="tahun">
                       <option value="" hidden>Pilih Tahun</option>
-                      <option value="2022">2022</option>
-                      <option value="2023">2023</option>
-                      <option value="2024">2023</option>
-                      <option value="2025">2025</option>
-                      <option value="2026">2026</option>
-                      <option value="2027">2027</option>
-                      <option value="2028">2028</option>
-                      <option value="2029">2029</option>
-                      <option value="2030">2030</option>
-                      <option value="2031">2031</option>
-                      <option value="2032">2032</option>
-                      <option value="2033">2033</option>
-                      <option value="2034">2034</option>
-                      <option value="2035">2035</option>
-                      <option value="2036">2036</option>
+                      <?php for ($x = 2022; $x <= 2100; $x++) {  ?>
+
+                      <option value="<?= $x ?>"><?= $x; ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                   <!-- /.input group -->
                 </div>
                 
                 <!-- /.form group -->
-                <button type="submit" name="submit" class="btn btn-block btn-outline-primary">Tambah Data Pembayaran</button>
+                <button type="submit" name="submit" class="btn btn-block btn-outline-primary">Tambah Data Pembayaran SPP</button>
               </div>
               <!-- /.col -->
             </div>
@@ -337,6 +326,357 @@ include '../koneksi/config.php';
         </form>
         </div>
         <!-- /.card -->
+        <?php }else{
+          $kode_bayar = $_GET['kode-bayar'];
+             
+          $query = $koneksi->query("SELECT * FROM tbl_spp WHERE kode_bayar = '$kode_bayar'");
+
+          foreach($query as $data_spp) :
+             
+        ?>
+
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Edit Data Pembayaran SPP</h3>
+          </div>
+          <!-- /.card-header -->
+          <form action="proses-spp/proses_edit.php" id="formUser" method="post">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Kode Pembayaran :</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" value="<?= $data_spp['kode_bayar'];?>" class="form-control" id="kodebayar" name="kodebayar" readonly>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Nis :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="number" class="form-control" id="nis" name="nis" value="<?= $data_spp['nis'] ?>" readonly>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Nama :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="nama" name="nama" value="<?= $data_spp['nama'] ?>" readonly>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Kelas :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="kelas" name="kelas" value="<?= $data_spp['kelas'] ?>" readonly>
+                  </div>
+                  <!-- /.input group -->
+                  
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Semester :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="semester" name="semester" value="<?= $data_spp['semester'] ?>" readonly>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+              </div>
+
+              <!-- /.col -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Status SPP :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="status_spp" name="status_spp" value="<?= $data_spp['status_spp'] ?>" readonly>
+                  </div>
+                  <!-- /.input group -->
+
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Jumlah Bayar :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Rp.</span>
+                    </div>
+                    <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" value="<?= $hasil_rupiah = number_format($data_spp['jumlah_bayar'],0,',','.'); ?>">
+                  </div>
+                  <!-- /.input group -->
+
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>Tanggal Bayar :</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="date" class="form-control" id="tgl_bayar" name="tgl_bayar" value="<?= $data_spp['tgl_bayar'] ?>">
+                  </div>
+                  <!-- /.input group -->
+                  
+                </div>
+                <!-- /.input group -->
+
+
+                <div class="form-group">
+                  <label>Untuk Bulan :</label>
+
+                  <div class="form-group">
+                    <select class="custom-select form-control-border" id="bulan" name="bulan">
+                     <?php if($data_spp['bulan'] == "Januari"){ ?>
+                      <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari" selected>Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                     <?php } else if($data_spp['bulan'] == "Februari"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari" selected>Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                     <?php } else if($data_spp['bulan'] == "Maret"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret" selected>Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "April"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April" selected>April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "Mei"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei" selected>Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "Juni"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni" selected>Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "Juli"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli" selected>Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "Agustus"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus" selected>Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "September"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September" selected>Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "Oktober"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober" selected>Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "November"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November" selected>November</option>
+                      <option value="Desember">Desember</option>
+
+                      <?php } else if($data_spp['bulan'] == "Desember"){ ?>
+                     <option value="" hidden>Pilih Bulan</option>
+                      <option value="Januari">Januari</option>
+                      <option value="Februari">Februari</option>
+                      <option value="Maret">Maret</option>
+                      <option value="April">April</option>
+                      <option value="Mei">Mei</option>
+                      <option value="Juni">Juni</option>
+                      <option value="Juli">Juli</option>
+                      <option value="Agustus">Agustus</option>
+                      <option value="September">Septemer</option>
+                      <option value="Oktober">Oktober</option>
+                      <option value="November">November</option>
+                      <option value="Desember" selected>Desember</option>
+                     <?php } ?>
+                    </select>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+
+                <div class="form-group">
+                  <label>Tahun :</label>
+
+                  <div class="form-group">
+                    <select class="custom-select form-control-border" id="tahun" name="tahun">
+                     <?php for ($x = 2022; $x <= 2025; $x++) {  ?>
+
+                      <?php if($x == $data_spp['tahun']) {  ?>
+                      <option value="<?= $x ?>" selected><?= $x; ?></option>
+                      <?php }else { ?>
+                      <option value="<?= $x ?>"><?= $x; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                
+                <!-- /.form group -->
+                <button type="submit" name="submit" class="btn btn-block btn-outline-primary">Edit Data Pembayaran SPP</button>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.card-body -->
+          <?php endforeach; ?>
+        </form>
+        </div>
+        <!-- /.card -->
+        <?php } ?>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -379,19 +719,21 @@ include '../koneksi/config.php';
                   ?>
                   <tr>
                     <td><?= $no++; ?></td>
-                    <td><?= $data['kode_bayar'] ?></td>
+                    <td style="color: green;"><?= $data['kode_bayar'] ?></td>
                     <td><?= $data['nis'] ?></td>
                     <td><?= $data['nama'] ?></td>
                     <td><?= $data['kelas'] ?></td>
                     <td><?= $data['semester'] ?></td>
                     <td><?= $data['status_spp'] ?></td>
-                    <td><?= $data['jumlah_bayar'] ?></td>
+                    <td style="color: blue;"><?= $hasil_rupiah = "Rp " . number_format($data['jumlah_bayar'],2,',','.'); ?>
+                    </td>
+
                     <td><?= $data['tgl_bayar'] ?></td>
                     <td><?= $data['bulan'] ?></td>
                     <td><?= $data['tahun'] ?></td>
                     <td><?= $data['status_bayar'] ?></td>
                     <td style="width: 10%;">
-                      <a href="#" class="btn btn-outline-primary btn-sm">Edit</a> 
+                      <a href="data-spp.php?kode-bayar=<?= $data['kode_bayar'] ?>" class="btn btn-outline-primary btn-sm">Edit</a> 
                       <a href="#" class="btn btn-outline-danger btn-sm">Hapus</a>
                     </td>
                   </tr>
@@ -573,6 +915,9 @@ var rupiah = document.getElementById('jumlah_bayar');
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
         }
+
+
+ 
 </script>
 </body>
 </html>

@@ -33,10 +33,27 @@ include '../../koneksi/config.php';
   $jumlahBayarImplode = (int)implode($jumlahBayarExplode);
   $status_bayar    = "LUNAS";
 
-  $query_cek = $koneksi->query("SELECT * FROM tbl_spp WHERE nis = '$nis' AND status_spp = 'Proses'");
+  $query_cek_bulan_tahun = $koneksi->query("SELECT * FROM tbl_spp WHERE nis ='$nis' AND bulan = '$bulan' AND tahun = '$tahun'");
+  $cek_bulan_tahun = mysqli_num_rows($query_cek_bulan_tahun);
 
+  $query_cek = $koneksi->query("SELECT * FROM tbl_spp WHERE nis = '$nis' AND status_spp = 'Proses'");
   $cek = mysqli_num_rows($query_cek);
-  if($cek == 5){
+
+  if($cek_bulan_tahun > 0){
+
+        echo "<script>
+        Swal.fire({
+         title: 'Gagal',
+         text: 'Bulan atau tahun sudah ada!',
+         icon: 'error',
+         confirmButtonColor: '#3085d6'
+       }).then((result) => {
+         if (result.isConfirmed) {
+           window.location.href='../data-spp.php'
+         }
+       })
+    </script>";
+  }else if($cek == 5){
 
    $query_u_status_spp = $koneksi->query("UPDATE tbl_spp SET status_spp = 'Selesai' WHERE nis = '$nis'");
 
