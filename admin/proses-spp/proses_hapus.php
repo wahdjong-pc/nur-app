@@ -14,23 +14,23 @@
 
 <?php
 include '../../koneksi/config.php';
-if (isset($_GET['id'])) {
-  $id = $_GET['id'];
+if (isset($_GET['id_spp'])) {
+  $id_spp = $_GET['id_spp'];
 // perintah hapus data berdasarkan id yang dikirimkan
-  $query = $koneksi->query("DELETE FROM tbl_siswa WHERE id_siswa = '$id'");
+  $query = $koneksi->query("DELETE FROM tbl_spp WHERE id_spp = '$id_spp'");
 // cek perintah
   if ($query) {
     // pesan apabila hapus berhasil
     echo "<script>Swal.fire(
       'Terhapus!',
-      'Data siswa berhasil di hapus!',
+      'Data spp berhasil di hapus!',
       'success' 
     ).then((result) => {
-       window.location.href='../data-siswa.php'
+       window.location.href='../data-spp.php'
    })</script>";
   } else {
     // pesan apabila hapus gagal
-    echo "<script>alert('Data berhasil dihapus'); window.location.href='../data-siswa.php'</script>";
+    echo "<script>alert('Data berhasil dihapus'); window.location.href='../data-spp.php'</script>";
   }
 }
 

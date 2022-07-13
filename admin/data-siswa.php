@@ -366,7 +366,7 @@ include '../koneksi/config.php';
                         <?php if($data_siswa['kelas'] == "1.A"){ ?>
                         <option value="1.A" selected>1.A</option>
                         <option value="1.B">1.B</option>
-                        <option value="1.B">1.B</option>
+                        <option value="1.C">1.C</option>
                         <option value="2.A">2.A</option>
                         <option value="2.B">2.B</option>
                         <option value="2.C">2.C</option>
@@ -386,7 +386,7 @@ include '../koneksi/config.php';
                         <?php } else if($data_siswa['kelas'] == "1.B"){ ?>
                          <option value="1.A">1.A</option>
                          <option value="1.B" selected>1.B</option>
-                         <option value="1.B">1.B</option>
+                         <option value="1.C">1.C</option>
                          <option value="2.A">2.A</option>
                          <option value="2.B">2.B</option>
                          <option value="2.C">2.C</option>

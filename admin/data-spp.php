@@ -19,6 +19,10 @@ include '../koneksi/config.php';
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+
+  <!-- SweatAlert -->
+  <link rel="stylesheet" href="../sweatalert/dist/sweetalert2.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
 <div class="wrapper">
@@ -651,7 +655,7 @@ include '../koneksi/config.php';
 
                   <div class="form-group">
                     <select class="custom-select form-control-border" id="tahun" name="tahun">
-                     <?php for ($x = 2022; $x <= 2025; $x++) {  ?>
+                     <?php for ($x = 2022; $x <= 2100; $x++) {  ?>
 
                       <?php if($x == $data_spp['tahun']) {  ?>
                       <option value="<?= $x ?>" selected><?= $x; ?></option>
@@ -734,7 +738,7 @@ include '../koneksi/config.php';
                     <td><?= $data['status_bayar'] ?></td>
                     <td style="width: 10%;">
                       <a href="data-spp.php?kode-bayar=<?= $data['kode_bayar'] ?>" class="btn btn-outline-primary btn-sm">Edit</a> 
-                      <a href="#" class="btn btn-outline-danger btn-sm">Hapus</a>
+                      <button onclick="hapusSpp(<?= $data['id_spp']; ?>)" class="btn btn-outline-danger btn-sm">Hapus</button>
                     </td>
                   </tr>
                   <?php endwhile; ?>
@@ -785,6 +789,9 @@ include '../koneksi/config.php';
 
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+
+<!-- SweetAlert -->
+<script src="../sweatalert/dist/sweetalert2.all.min.js"></script>
 
 <!-- Page specific script -->
 <script>
@@ -872,6 +879,21 @@ include '../koneksi/config.php';
     }
   });
 });
+
+function hapusSpp(id){
+ Swal.fire({
+  title: 'Apakah anda yakin menghapus data spp ini?',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Ya'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href='proses-spp/proses_hapus.php?id_spp='+id
+  }
+})
+}
 
 function isi_otomatis(){
                 var nis = $("#nis").val();
