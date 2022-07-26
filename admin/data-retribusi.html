@@ -7,7 +7,7 @@ include '../koneksi/config.php';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Data Pegawai</title>
+  <title>Data Retribusi</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -58,7 +58,7 @@ include '../koneksi/config.php';
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
           <a class="d-block"><b>Alexander Pierce</b></a>
-          <a class="d-block">Jabatan</a>
+          <a class="d-block">Admin</a>
         </div>
       </div>
 
@@ -79,19 +79,19 @@ include '../koneksi/config.php';
               </li>
 
               <li class="nav-item">
-                <a href="data-user.php" class="nav-link active">
+                <a href="data-pegawai.php" class="nav-link">
                   <p>Data Pegawai</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-siswa.php" class="nav-link">
+                <a href="data-retribusi.html" class="nav-link active">
                   <p>Data Retribusi</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-spp.php" class="nav-link">
+                <a href="database.php" class="nav-link">
                   <p>Database <b>(Coming Soon)</b></p>
                 </a>
               </li>
@@ -112,7 +112,7 @@ include '../koneksi/config.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Data <b>Pegawai</b></h1>
+            <h1 class="m-0">Data <b>Retribusi</b></h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -125,47 +125,24 @@ include '../koneksi/config.php';
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-md-4">
-            <div class="card card-primary">
+            <div class="card card-warning">
               <div class="card-header">
-                <h3 class="card-title">Tambah data pegawai</h3>
+                <h3 class="card-title">Tambah data retribusi</h3>
               </div>
 
-              <form action="proses-user/proses_tambah.php" id="formPegawai" method="post">
+              <form action="proses-user/proses_tambah.php" id="formRetribusi" method="post">
               <div class="card-body">
                 <div class="form-group">
-                  <label>NIK :</label>
+                  <label>PASAR :</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="number" class="form-control" id="nik" name="nik">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>NAMA :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="text" class="form-control" id="nama" name="nama">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>JABATAN :</label>
-
-                  <div class="input-group">
-                    <select class="custom-select form-control-border" id="jabatan" name="jabatan">
-                      <option value="" hidden>Pilih Jabatan</option>
-                      <option value="Admin Master">Admin Master</option>
-                      <option value="Pegawai">Pegawai</option>
+                    <select class="custom-select form-control-border" id="pasar" name="pasar">
+                      <option value="" hidden>Pilih Pasar</option>
+                      <option value="KOBA">KOBA</option>
+                      <option value="NAMANG">NAMANG</option>
+                      <option value="SUNGAI SELAN">SUNGAI SELAN</option>
+                      <option value="SIMPANG KATIS">SIMPANG KATIS</option>
+                      <option value="AIR MESU">AIR MESU</option>
                     </select>
                   </div>
                   <!-- /.input group -->
@@ -173,78 +150,84 @@ include '../koneksi/config.php';
                 <!-- /.form group -->
 
                 <div class="form-group">
-                  <label>USERNAME :</label>
+                  <label>TANGGAL :</label>
 
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="username" name="username">
+                    <input type="date" class="form-control" id="tanggal" name="tanggal">
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
                 <div class="form-group">
-                  <label>PASSWORD :</label>
+                  <label>JENIS TIKET :</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <select class="custom-select form-control-border" id="jenis_tiket" name="jenis_tiket">
+                      <option value="" hidden>Pilih Jenis Tiket</option>
+                      <option value="HARIAN">HARIAN</option>
+                      <option value="BULANAN">BULANAN</option>
+                      <option value="MUSIMAN">MUSIMAN</option>
+                    </select>
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
-                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Tambah Data</button>
+                <div class="form-group">
+                  <label>NOMOR KIOS :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="no_kios" name="no_kios">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>KODE KARCIS :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="password" class="form-control" id="kode_karcis" name="kode_karcis">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Tambah Data Retribusi</button>
               </div>
               <!-- /.card-body -->
             </form>
             </div>
             <!-- /.card -->
-            <div class="card card-primary">
+
+            <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">Edit data pegawai</h3>
+                <h3 class="card-title">Edit data retribusi</h3>
               </div>
 
-              <form action="proses-user/proses_tambah.php" id="formPegawai" method="post">
+              <form action="proses-user/proses_tambah.php" id="formRetribusi" method="post">
               <div class="card-body">
                 <div class="form-group">
-                  <label>NIK :</label>
+                  <label>PASAR :</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="number" class="form-control" id="nik" name="nik">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>NAMA :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="text" class="form-control" id="nama" name="nama">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>JABATAN :</label>
-
-                  <div class="input-group">
-                    <select class="custom-select form-control-border" id="jabatan" name="jabatan">
-                      <option value="" hidden>Pilih Jabatan</option>
-                      <option value="Admin Master">Admin Master</option>
-                      <option value="Pegawai">Pegawai</option>
+                    <select class="custom-select form-control-border" id="pasar" name="pasar">
+                      <option value="" hidden>Pilih Pasar</option>
+                      <option value="KOBA">KOBA</option>
+                      <option value="NAMANG">NAMANG</option>
+                      <option value="SUNGAI SELAN">SUNGAI SELAN</option>
+                      <option value="SIMPANG KATIS">SIMPANG KATIS</option>
+                      <option value="AIR MESU">AIR MESU</option>
                     </select>
                   </div>
                   <!-- /.input group -->
@@ -252,32 +235,60 @@ include '../koneksi/config.php';
                 <!-- /.form group -->
 
                 <div class="form-group">
-                  <label>USERNAME :</label>
+                  <label>TANGGAL :</label>
 
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="text" class="form-control" id="username" name="username">
+                    <input type="date" class="form-control" id="tanggal" name="tanggal">
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
                 <div class="form-group">
-                  <label>PASSWORD :</label>
+                  <label>JENIS TIKET :</label>
 
                   <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <select class="custom-select form-control-border" id="jenis_tiket" name="jenis_tiket">
+                      <option value="" hidden>Pilih Jenis Tiket</option>
+                      <option value="HARIAN">HARIAN</option>
+                      <option value="BULANAN">BULANAN</option>
+                      <option value="MUSIMAN">MUSIMAN</option>
+                    </select>
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
-                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Edit Data</button>
+                <div class="form-group">
+                  <label>NOMOR KIOS :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="no_kios" name="no_kios">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>KODE KARCIS :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="password" class="form-control" id="kode_karcis" name="kode_karcis">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Edit Data Retribusi</button>
               </div>
               <!-- /.card-body -->
             </form>
@@ -298,19 +309,22 @@ include '../koneksi/config.php';
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h1 style="text-align: center; padding: 10px 0;"><b>Seluruh Data Pegawai</b></h1>
+                <h1 style="text-align: center; padding: 10px 0;"><b>Seluruh Data Retribusi</b></h1>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-hover">
                   <thead>
+                    <div class="col-md-1">
+                      <button type="button" class="btn btn-block btn-primary btn-sm">Download Excel</button>
+                    </div>
                   <tr>
-                    <th style="width: 2%;">No.</th>
-                    <th>NIK</th>
-                    <th>NAMA</th>
-                    <th>JABATAN</th>
-                    <th>USERNAME</th>
-                    <th>PASSWORD</th>
+                    <th style="width: 2%;">NO.</th>
+                    <th>PASAR</th>
+                    <th>TANGGAL</th>
+                    <th>JENIS TIKET</th>
+                    <th>NOMOR KIOS</th>
+                    <th>KODE KARCIS</th>
                     <th>AKSI</th>
                   </tr>
                   </thead>
@@ -400,45 +414,39 @@ include '../koneksi/config.php';
   });
 
   $(function () {
-  $('#formPegawai').validate({
+  $('#formRetribusi').validate({
     rules: {
-      nik: {
-        required: true,
-        minlength: 16,
-        maxlength: 16,
-      },
-      nama: {
+      pasar: {
         required: true,
       },
-      jabatan: {
+      tanggal: {
         required: true,
       },
-      username: {
+      jenis_tiket: {
         required: true,
       },
-      password: {
+      no_kios: {
         required: true,
-        minlength: 4
+      },
+      kode_karcis: {
+        required: true,
       },
     },
     messages: {
-      nik: {
-        required: "Mohon diisi nik nya!",
-        minlength: "Minimal 16 angka",
-        maxlength: "Maksimal 16 angka",
+      pasar: {
+        required: "Mohon dipilih pasar nya!",
       },
-      nama: {
-        required: "Mohon diisi nama nya!",
+      tanggal: {
+        required: "Mohon diisi tanggal nya!",
       },
-      jabatan: {
-        required: "Mohon diisi jabatan nya!",
+      jenis_tiket: {
+        required: "Mohon dipilih jenis tiket nya!",
       },
-      username: {
-        required: "Mohon diisi username nya!",
+      no_kios: {
+        required: "Mohon diisi nomor kios nya!",
       },
-      password: {
-        required: "Mohon diisi password nya!",
-        minlength: "minimal 4 karakter"
+      kode_karcis: {
+        required: "Mohon diisi kode karcis nya!",
       },
     },
     errorElement: 'span',
