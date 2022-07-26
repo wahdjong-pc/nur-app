@@ -1,3 +1,54 @@
+<?php 
+session_start();
+
+include 'config/config.php';
+
+
+if (isset($_POST["submit"])) {
+  # code...
+  // ambil input username dan password
+  $nik = mysqli_real_escape_string($conn, $_POST["nik"]);
+  $pass = mysqli_real_escape_string($conn, $_POST["password"]);
+
+
+  // cel nik
+  $result = mysqli_query($conn, "SELECT * FROM tbl_pegawai WHERE nik = '$nik'");
+
+
+  // jika ada nik nya
+  if (mysqli_num_rows($result) == 1) {
+    # code...
+    $hasil = mysqli_fetch_assoc($result);
+
+    if (password_verify($pass, $hasil['password'])) {
+      # code...
+      // set session
+
+      $_SESSION['login']    = true;
+      $_SESSION['nik']      = $hasil['nik'];
+      $_SESSION['password'] = $hasil['password'];
+      $_SESSION['jabatan']  = $hasil['jabatan'];
+
+      header("Location: admin-master/home.php");
+      exit;
+
+    }
+  }
+
+  echo "<script>Swal.fire(
+          'Errors!',
+          'NIK atau Password salah!',
+          'error' 
+        ).then((result) => {
+          window.location.href='index.php'
+      })</script>";
+}
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,12 +69,12 @@
   <div class="card card-outline card-primary">
     <br>
     <div class="card-header text-center">
-      <h1>LOGIN APP 1</h1>
+      <h1>LOGIN APP</h1>
     </div>
     <br>
     <div class="card-body">
 
-      <form action="index.html" id="formLogin" method="post">
+      <form action="index.php" id="formLogin" method="post">
         <div class="input-group mb-3">
           <input type="number" class="form-control" id="nik" name="nik" placeholder="masukkan nik...">
           <div class="input-group-append">
@@ -44,7 +95,7 @@
         <div class="row">
           <!-- /.col -->
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block"><b>LOGIN</b></button>
+            <button type="submit" class="btn btn-primary btn-block" name="submit"><b>LOGIN</b></button>
           </div>
           <!-- /.col -->
         </div>

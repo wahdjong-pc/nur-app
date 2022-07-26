@@ -1,5 +1,6 @@
+
 <?php
-$koneksi = new mysqli("localhost","root","","app_sd");
+$koneksi = new mysqli("localhost","root","","nur-app");
 
 // Check connection
 if ($koneksi -> connect_errno) {

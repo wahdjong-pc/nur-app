@@ -1,5 +1,5 @@
 <?php 
-include '../koneksi/config.php';
+include '../config/config.php';
 
 ?>
 <!DOCTYPE html>
@@ -130,7 +130,7 @@ include '../koneksi/config.php';
                 <h3 class="card-title">Tambah data pegawai</h3>
               </div>
 
-              <form action="proses-user/proses_tambah.php" id="formPegawai" method="post">
+              <form action="proses-pegawai/proses_tambah.php" id="formPegawai" method="post">
               <div class="card-body">
                 <div class="form-group">
                   <label>NIK :</label>
@@ -198,91 +198,13 @@ include '../koneksi/config.php';
                 </div>
                 <!-- /.form group -->
 
-                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Tambah Data</button>
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Tambah Data Pegawai</button>
               </div>
               <!-- /.card-body -->
             </form>
             </div>
             <!-- /.card -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Edit data pegawai</h3>
-              </div>
-
-              <form action="proses-user/proses_tambah.php" id="formPegawai" method="post">
-              <div class="card-body">
-                <div class="form-group">
-                  <label>NIK :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="number" class="form-control" id="nik" name="nik">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>NAMA :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="text" class="form-control" id="nama" name="nama">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>JABATAN :</label>
-
-                  <div class="input-group">
-                    <select class="custom-select form-control-border" id="jabatan" name="jabatan">
-                      <option value="" hidden>Pilih Jabatan</option>
-                      <option value="Admin Master">Admin Master</option>
-                      <option value="Pegawai">Pegawai</option>
-                    </select>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>USERNAME :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="text" class="form-control" id="username" name="username">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>PASSWORD :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="password" class="form-control" id="password" name="password">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Edit Data</button>
-              </div>
-              <!-- /.card-body -->
-            </form>
-            </div>
-            <!-- /.card -->
+            
           </div>
         </div>
         <!-- /.row -->
@@ -316,12 +238,11 @@ include '../koneksi/config.php';
                   </thead>
                   <tbody>
                   <?php 
-                  $query = $koneksi->query("SELECT * FROM tbl_user");
+                  $query = $koneksi->query("SELECT * FROM tbl_pegawai");
                   
                   $no = 1;
 
                   while($data = $query->fetch_assoc()) :
-                  
                   
                   
                   ?>
@@ -333,7 +254,7 @@ include '../koneksi/config.php';
                     <td><?= $data['username']; ?></td>
                     <td><?= $data['password']; ?></td>
                     <td>
-                      <a href="data-user.php?id=<?= $data['id_user']; ?>" class="btn btn-outline-primary btn-sm">Edit</a> 
+                      <a href="data-pegawai.php?id=<?= $data['id_pegawai']; ?>" class="btn btn-outline-primary btn-sm">Edit</a> 
                       <button onclick="hapus(<?= $data['id_user']; ?>)" class="btn btn-outline-danger btn-sm">Hapus</button>
                     </td>
                   </tr>
