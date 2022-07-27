@@ -125,6 +125,7 @@ include '../config/config.php';
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-md-4">
+          <?php if(empty($_GET)) { ?>
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Tambah data pegawai</h3>
@@ -204,7 +205,106 @@ include '../config/config.php';
             </form>
             </div>
             <!-- /.card -->
-            
+
+            <?php } else { 
+
+            $id_pegawai = $_GET['id'];
+             
+            $query = $koneksi->query("SELECT * FROM tbl_pegawai WHERE id_pegawai = '$id_pegawai'");
+
+            foreach($query as $data_pegawai) :  
+              
+            ?>
+
+            <div class="card card-warning">
+              <div class="card-header">
+                <h3 class="card-title">Edit data pegawai</h3>
+              </div>
+
+              <form action="proses-pegawai/proses_edit.php" id="formPegawai" method="post">
+              <div class="card-body">
+              <input type="number" class="form-control" id="id_pegawai" name="id_pegawai" value="<?= $data_pegawai['id_pegawai']; ?>" hidden>
+                <div class="form-group">
+                  <label>NIK :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    
+                    <input type="number" class="form-control" id="nik" name="nik" value="<?= $data_pegawai['nik']; ?>">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>NAMA :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="nama" name="nama" value="<?= $data_pegawai['nama']; ?>">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>JABATAN :</label>
+
+                  <div class="input-group">
+                    <select class="custom-select form-control-border" id="jabatan" name="jabatan">
+                    <option value="" hidden>Pilih Jabatan</option>
+                      <?php if ($data_pegawai['jabatan'] == "Admin Master") { ?>
+                        
+                        <option value="Admin Master" selected>Admin Master</option>
+                        <option value="Pegawai">Pegawai</option>
+                      <?php }else{ ?>
+                        <option value="Admin Master" >Admin Master</option>
+                        <option value="Pegawai" selected>Pegawai</option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>USERNAME :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="username" name="username" value="<?= $data_pegawai['username']; ?>">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>PASSWORD :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="password" class="form-control" id="password" name="password">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <button type="submit" class="btn btn-block btn-outline-warning" name="submit-edit">Edit Data Pegawai</button>
+              </div>
+              <!-- /.card-body -->
+              <?php endforeach; ?>
+            </form>
+            </div>
+            <!-- /.card -->
+            <?php } ?>
           </div>
         </div>
         <!-- /.row -->

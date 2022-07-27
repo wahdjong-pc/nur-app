@@ -13,41 +13,43 @@
 <body>
 
 <?php
-include '../../koneksi/config.php';
+include '../../config/config.php';
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit-edit'])) {
 
-  $id_user = $_POST['id_user'];
-  $nama = $_POST['nama'];
-  $jabatan = $_POST['jabatan'];
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  $id_pegawai   = $_POST['id_pegawai'];
+  $nik          = $_POST['nik'];
+  $nama         = $_POST['nama'];
+  $jabatan      = $_POST['jabatan'];
+  $username     = $_POST['username'];
+  $password     = $_POST['password'];
 
   $pass_hash = password_hash($password, PASSWORD_DEFAULT);
 
-$query = $koneksi->query("UPDATE tbl_user SET 
+$query = $koneksi->query("UPDATE tbl_pegawai SET 
+nik = '$nik', 
 nama = '$nama', 
 jabatan = '$jabatan', 
 username = '$username', 
-password = '$pass_hash' WHERE id_user = '$id_user'");
+password = '$pass_hash' WHERE id_pegawai = '$id_pegawai'");
 
 if ($query) {
     // pesan jika data berubah
     echo "<script>
     Swal.fire({
      title: 'Berhasil',
-     text: 'Data user berhasil diubah!',
+     text: 'Data pegawai berhasil diubah!',
      icon: 'success',
      confirmButtonColor: '#3085d6'
    }).then((result) => {
      if (result.isConfirmed) {
-       window.location.href='../data-user.php'
+       window.location.href='../data-pegawai.php'
      }
    })
 </script>";
   } else {
     // pesan jika data gagal diubah
-    echo "<script>alert('Data produk gagal diubah'); window.location.href='index.php'</script>";
+    echo "<script>alert('Data pegawai gagal diubah'); window.location.href='../data-pegawai.php'</script>";
   }
 }
 ?>
