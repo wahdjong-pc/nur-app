@@ -39,6 +39,19 @@ include '../config/config.php';
       }
     }
 
+    function pilihBiayaLanjutan(){
+      const tiket = document.getElementById("jenis-tiket-lanjutan");
+      const tiketDipilih = tiket.value;
+      
+      if (tiketDipilih == "LAPAK") {
+        document.getElementById("biaya-lanjutan").value = 2000;
+      }else if (tiketDipilih == "KIOS") {
+        document.getElementById("biaya-lanjutan").value = 3000;
+      }else{
+        document.getElementById("biaya-lanjutan").value = 5000;
+      }
+    }
+
 
     
 
@@ -465,7 +478,7 @@ include '../config/config.php';
                   <label>JENIS TIKET :</label>
 
                   <div class="input-group">
-                    <select onchange="pilihBiaya()" class="custom-select form-control-border" id="jenis_tiket" name="jenis_tiket">
+                    <select onchange="pilihBiayaLanjutan()" class="custom-select form-control-border" id="jenis-tiket-lanjutan" name="jenis_tiket">
                       <option value="" hidden>Pilih Jenis Tiket</option>
                       <option value="LAPAK">LAPAK</option>
                       <option value="KIOS">KIOS</option>
@@ -483,7 +496,7 @@ include '../config/config.php';
                     <div class="input-group-prepend">
                       <span class="input-group-text">Rp.</span>
                     </div>
-                    <input type="number" class="form-control" id="biaya" name="biaya" readonly>
+                    <input type="number" class="form-control" id="biaya-lanjutan" name="biaya" readonly>
                   </div>
                   <!-- /.input group -->
                 </div>
