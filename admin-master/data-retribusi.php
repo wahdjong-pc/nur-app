@@ -576,12 +576,15 @@ include '../config/config.php';
                   while($data = $query->fetch_assoc()) :
                     $biayaFirst = $data['biaya'];
                   
-                    $biaya = number_format($biayaFirst,2,",",".")
+                    $biaya = number_format($biayaFirst,2,",",".");
+
+                    $originalDate = $data['tanggal'];
+                    $newDate = date("d F Y", strtotime($originalDate));
                   ?>
                   <tr>
                     <td><?= $no++;?></td>
                     <td><?= $data['pasar']; ?></td>
-                    <td><?= $data['tanggal']; ?></td>
+                    <td><?= $newDate; ?></td>
                     <td><?= $data['jenis_tiket']; ?></td>
                     <td>Rp. <?= $biaya; ?></td>
                     <td><?= $data['no_kios']; ?></td>
