@@ -354,8 +354,8 @@ include '../config/config.php';
                     <td><?= $data['username']; ?></td>
                     <td><?= $data['password']; ?></td>
                     <td>
-                      <a href="data-pegawai.php?id=<?= $data['id_pegawai']; ?>" class="btn btn-outline-primary btn-sm">Edit</a> 
-                      <button onclick="hapus(<?= $data['id_user']; ?>)" class="btn btn-outline-danger btn-sm">Hapus</button>
+                      <a href="data-pegawai.php?id=<?= $data['id_pegawai']; ?>" class="btn btn-outline-primary btn-sm" title="Edit"><i class="fa fa-pen"></i></a> 
+                      <button onclick="hapus(<?= $data['id_pegawai']; ?>)" class="btn btn-outline-danger btn-sm" title="Hapus"><i class="fa fa-trash"></i></button>
                     </td>
                   </tr>
 
@@ -478,7 +478,7 @@ include '../config/config.php';
 
 function hapus(id){
  Swal.fire({
-  title: 'Apakah anda yakin menghapus data ini?',
+  title: 'Apakah anda yakin menghapus data pegawai ini?',
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: '#3085d6',
@@ -486,7 +486,7 @@ function hapus(id){
   confirmButtonText: 'Ya'
 }).then((result) => {
   if (result.isConfirmed) {
-    window.location.href='proses-user/proses_hapus.php?id='+id
+    window.location.href='proses-pegawai/proses_hapus.php?id='+id
   }
 })
 }
