@@ -70,19 +70,19 @@
               </li>
 
               <li class="nav-item">
-                <a href="data-user.php" class="nav-link">
+                <a href="data-pegawai.php" class="nav-link">
                   <p>Data Pegawai</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-siswa.php" class="nav-link">
+                <a href="data-retribusi.php" class="nav-link">
                   <p>Data Retribusi</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="data-spp.php" class="nav-link">
+                <a href="#" class="nav-link">
                   <p>Database (Coming Soon)</p>
                 </a>
               </li>

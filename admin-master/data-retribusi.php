@@ -9,6 +9,8 @@ include '../koneksi/config.php';
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Data Retribusi</title>
 
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> -->
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -22,6 +24,21 @@ include '../koneksi/config.php';
 
   <!-- SweatAlert -->
   <link rel="stylesheet" href="../sweatalert/dist/sweetalert2.min.css">
+
+  <script type="text/javascript">
+    function pilihBiaya(){
+      const tiket = document.getElementById("jenis_tiket");
+      const tiketDipilih = tiket.value;
+      
+      if (tiketDipilih == "LAPAK") {
+        document.getElementById("biaya").value = 2000;
+      }else if (tiketDipilih == "KIOS") {
+        document.getElementById("biaya").value = 3000;
+      }else{
+        document.getElementById("biaya").value = 5000;
+      }
+    }
+  </script>
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
 <div class="wrapper">
@@ -166,12 +183,25 @@ include '../koneksi/config.php';
                   <label>JENIS TIKET :</label>
 
                   <div class="input-group">
-                    <select class="custom-select form-control-border" id="jenis_tiket" name="jenis_tiket">
+                    <select onchange="pilihBiaya()" class="custom-select form-control-border" id="jenis_tiket" name="jenis_tiket">
                       <option value="" hidden>Pilih Jenis Tiket</option>
-                      <option value="HARIAN">HARIAN</option>
-                      <option value="BULANAN">BULANAN</option>
+                      <option value="LAPAK">LAPAK</option>
+                      <option value="KIOS">KIOS</option>
                       <option value="MUSIMAN">MUSIMAN</option>
                     </select>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>BIAYA :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Rp.</span>
+                    </div>
+                    <input type="number" class="form-control" id="biaya" name="biaya" readonly>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -210,90 +240,7 @@ include '../koneksi/config.php';
             </div>
             <!-- /.card -->
 
-            <div class="card card-danger">
-              <div class="card-header">
-                <h3 class="card-title">Edit data retribusi</h3>
-              </div>
-
-              <form action="proses-user/proses_tambah.php" id="formRetribusi" method="post">
-              <div class="card-body">
-                <div class="form-group">
-                  <label>PASAR :</label>
-
-                  <div class="input-group">
-                    <select class="custom-select form-control-border" id="pasar" name="pasar">
-                      <option value="" hidden>Pilih Pasar</option>
-                      <option value="KOBA">KOBA</option>
-                      <option value="NAMANG">NAMANG</option>
-                      <option value="SUNGAI SELAN">SUNGAI SELAN</option>
-                      <option value="SIMPANG KATIS">SIMPANG KATIS</option>
-                      <option value="AIR MESU">AIR MESU</option>
-                    </select>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>TANGGAL :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>JENIS TIKET :</label>
-
-                  <div class="input-group">
-                    <select class="custom-select form-control-border" id="jenis_tiket" name="jenis_tiket">
-                      <option value="" hidden>Pilih Jenis Tiket</option>
-                      <option value="HARIAN">HARIAN</option>
-                      <option value="BULANAN">BULANAN</option>
-                      <option value="MUSIMAN">MUSIMAN</option>
-                    </select>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>NOMOR KIOS :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="text" class="form-control" id="no_kios" name="no_kios">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <div class="form-group">
-                  <label>KODE KARCIS :</label>
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
-                    </div>
-                    <input type="password" class="form-control" id="kode_karcis" name="kode_karcis">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-
-                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Edit Data Retribusi</button>
-              </div>
-              <!-- /.card-body -->
-            </form>
-            </div>
-            <!-- /.card -->
+            
           </div>
         </div>
         <!-- /.row -->
@@ -406,7 +353,7 @@ include '../koneksi/config.php';
 <script src="../sweatalert/dist/sweetalert2.all.min.js"></script>
 
 <!-- Page specific script -->
-<script>
+<script type="text/javascript">
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -478,7 +425,10 @@ function hapus(id){
 })
 }
 
-
 </script>
+
+
+
+
 </body>
 </html>
