@@ -528,7 +528,7 @@ include '../config/config.php';
                 </div>
                 <!-- /.form group -->
 
-                <button type="submit" class="btn btn-block btn-outline-primary" name="submit-retribusi-lanjutan">Tambah Data Retribusi Selanjudnya</button>
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit-retribusi">Tambah Data Retribusi Selanjudnya</button>
               </div>
               <!-- /.card-body -->
             </form>
@@ -574,14 +574,16 @@ include '../config/config.php';
                   $no = 1;
 
                   while($data = $query->fetch_assoc()) :
+                    $biayaFirst = $data['biaya'];
                   
+                    $biaya = number_format($biayaFirst,2,",",".")
                   ?>
                   <tr>
                     <td><?= $no++;?></td>
                     <td><?= $data['pasar']; ?></td>
                     <td><?= $data['tanggal']; ?></td>
                     <td><?= $data['jenis_tiket']; ?></td>
-                    <td><?= $data['biaya']; ?></td>
+                    <td>Rp. <?= $biaya; ?></td>
                     <td><?= $data['no_kios']; ?></td>
                     <td><?= $data['kode_karcis']; ?></td>
                     <td><?= $data['nik']; ?></td>
