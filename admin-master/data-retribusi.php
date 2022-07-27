@@ -1,5 +1,5 @@
 <?php 
-include '../koneksi/config.php';
+include '../config/config.php';
 
 ?>
 <!DOCTYPE html>
@@ -37,6 +37,17 @@ include '../koneksi/config.php';
       }else{
         document.getElementById("biaya").value = 5000;
       }
+    }
+
+
+    
+
+    function showData(pasar, tanggal){
+      let pasarLanjutan = pasar;
+      let tanggalLanjutan = tanggal;
+
+      document.getElementById("pasar-lanjutan").value = pasarLanjutan;
+      document.getElementById("tanggal-lanjutan").value = tanggalLanjutan;
     }
   </script>
 </head>
@@ -142,14 +153,15 @@ include '../koneksi/config.php';
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-md-4">
+          <?php if(empty($_GET)) { ?>
             <div class="card card-warning">
               <div class="card-header">
                 <h3 class="card-title">Tambah data retribusi</h3>
               </div>
 
-              <form action="proses-user/proses_tambah.php" id="formRetribusi" method="post">
+              <form action="proses-retribusi/proses_tambah.php" id="formRetribusi" method="post">
               <div class="card-body">
-                <div class="form-group">
+                <div class="form-group">  
                   <label>PASAR :</label>
 
                   <div class="input-group">
@@ -160,6 +172,7 @@ include '../koneksi/config.php';
                       <option value="SUNGAI SELAN">SUNGAI SELAN</option>
                       <option value="SIMPANG KATIS">SIMPANG KATIS</option>
                       <option value="AIR MESU">AIR MESU</option>
+                      <option value="KAYU BESI">KAYU BESI</option>
                     </select>
                   </div>
                   <!-- /.input group -->
@@ -227,19 +240,180 @@ include '../koneksi/config.php';
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
-                    <input type="password" class="form-control" id="kode_karcis" name="kode_karcis">
+                    <input type="text" class="form-control" id="kode_karcis" name="kode_karcis">
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
-                <button type="submit" class="btn btn-block btn-outline-primary" name="submit">Tambah Data Retribusi</button>
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit-retribusi">Tambah Data Retribusi</button>
               </div>
               <!-- /.card-body -->
             </form>
             </div>
             <!-- /.card -->
+            <?php }else{
 
+            $id_retribusi = $_GET['id'];
+             
+            $query = $koneksi->query("SELECT * FROM tbl_retribusi WHERE id_retribusi = '$id_retribusi'");
+
+            foreach($query as $data_retribusi) :    
+              
+            
+            ?>
+
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Edit data retribusi</h3>
+              </div>
+
+              <form action="proses-retribusi/proses_edit.php" id="formRetribusi" method="post">
+              <div class="card-body">
+              <input type="number" class="form-control" id="id_retribusi" name="id_retribusi" value="<?= $data_retribusi['id_retribusi']; ?>" hidden>
+                <div class="form-group">  
+                  <label>PASAR :</label>
+
+                  <div class="input-group">
+                    <select class="custom-select form-control-border" id="pasar" name="pasar">
+                      <option value="" hidden>Pilih Pasar</option>
+                      <?php if ($data_retribusi['pasar'] == "KOBA") { ?>
+                        
+                        <option value="KOBA" selected>KOBA</option>
+                        <option value="NAMANG">NAMANG</option>
+                        <option value="SUNGAI SELAN">SUNGAI SELAN</option>
+                        <option value="SIMPANG KATIS">SIMPANG KATIS</option>
+                        <option value="AIR MESU">AIR MESU</option>
+                        <option value="KAYU BESI">KAYU BESI</option>
+                      <?php }else if($data_retribusi['pasar'] == "NAMANG"){ ?>
+                        <option value="KOBA">KOBA</option>
+                        <option value="NAMANG" selected>NAMANG</option>
+                        <option value="SUNGAI SELAN">SUNGAI SELAN</option>
+                        <option value="SIMPANG KATIS">SIMPANG KATIS</option>
+                        <option value="AIR MESU">AIR MESU</option>
+                        <option value="KAYU BESI">KAYU BESI</option>
+                      <?php }else if($data_retribusi['pasar'] == "SUNGAI SELAN"){ ?>
+                        <option value="KOBA">KOBA</option>
+                        <option value="NAMANG">NAMANG</option>
+                        <option value="SUNGAI SELAN" selected>SUNGAI SELAN</option>
+                        <option value="SIMPANG KATIS">SIMPANG KATIS</option>
+                        <option value="AIR MESU">AIR MESU</option>
+                        <option value="KAYU BESI">KAYU BESI</option>
+                      <?php }else if($data_retribusi['pasar'] == "SIMPANG KATIS"){ ?>
+                        <option value="KOBA">KOBA</option>
+                        <option value="NAMANG">NAMANG</option>
+                        <option value="SUNGAI SELAN">SUNGAI SELAN</option>
+                        <option value="SIMPANG KATIS" selected>SIMPANG KATIS</option>
+                        <option value="AIR MESU">AIR MESU</option>
+                        <option value="KAYU BESI">KAYU BESI</option>
+                      <?php }else if($data_retribusi['pasar'] == "AIR MESU"){ ?>
+                        <option value="KOBA">KOBA</option>
+                        <option value="NAMANG">NAMANG</option>
+                        <option value="SUNGAI SELAN">SUNGAI SELAN</option>
+                        <option value="SIMPANG KATIS">SIMPANG KATIS</option>
+                        <option value="AIR MESU" selected>AIR MESU</option>
+                        <option value="KAYU BESI">KAYU BESI</option>
+                      <?php }else if($data_retribusi['pasar'] == "KAYU BESI"){ ?>
+                        <option value="KOBA">KOBA</option>
+                        <option value="NAMANG" >NAMANG</option>
+                        <option value="SUNGAI SELAN">SUNGAI SELAN</option>
+                        <option value="SIMPANG KATIS">SIMPANG KATIS</option>
+                        <option value="AIR MESU">AIR MESU</option>
+                        <option value="KAYU BESI" selected>KAYU BESI</option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>TANGGAL :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= $data_retribusi['tanggal']; ?>">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>JENIS TIKET :</label>
+
+                  <div class="input-group">
+                    <select onchange="pilihBiaya()" class="custom-select form-control-border" id="jenis_tiket" name="jenis_tiket">
+                      <option value="" hidden>Pilih Jenis Tiket</option>
+                      <?php if ($data_retribusi['jenis_tiket'] == "LAPAK") { ?>
+                        
+                        <option value="LAPAK" selected>LAPAK</option>
+                        <option value="KIOS">KIOS</option>
+                        <option value="MUSIMAN">MUSIMAN</option>
+                      <?php }else if($data_retribusi['jenis_tiket'] == "KIOS"){ ?>
+                        <option value="LAPAK">LAPAK</option>
+                        <option value="KIOS" selected>KIOS</option>
+                        <option value="MUSIMAN">MUSIMAN</option>
+                      <?php }else if($data_retribusi['jenis_tiket'] == "MUSIMAN"){ ?>
+                        <option value="LAPAK">LAPAK</option>
+                        <option value="KIOS">KIOS</option>
+                        <option value="MUSIMAN" selected>MUSIMAN</option>
+                      <?php } ?>
+                      
+                    </select>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>BIAYA :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Rp.</span>
+                    </div>
+                    <input type="number" class="form-control" id="biaya" name="biaya" value="<?= $data_retribusi['biaya']; ?>" readonly >
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>NOMOR KIOS :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="no_kios" name="no_kios" value="<?= $data_retribusi['no_kios']; ?>">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>KODE KARCIS :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div> 
+                    <input type="text" class="form-control" id="kode_karcis" name="kode_karcis" value="<?= $data_retribusi['kode_karcis']; ?>">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit-edit-retribusi">Edit Data Retribusi</button>
+              </div>
+              <!-- /.card-body -->
+            </form>
+            <?php endforeach; ?>
+            </div>
+            <!-- /.card -->
+            <?php }?>
             
           </div>
         </div>
@@ -249,6 +423,109 @@ include '../koneksi/config.php';
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    
+    <!-- modal -->
+  
+    <div class="modal fade" id="modal-retribusi">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Tambah Data Rertribusi Lanjutan</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <form action="proses-retribusi/proses_tambah.php" id="formRetribusi2" method="post">
+              <div class="card-body">
+                <div class="form-group">  
+                  <label>PASAR :</label>
+
+                  <div class="input-group">
+                  <input type="text" class="form-control" id="pasar-lanjutan" name="pasar" readonly>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>TANGGAL :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="date" class="form-control" id="tanggal-lanjutan" name="tanggal" readonly>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>JENIS TIKET :</label>
+
+                  <div class="input-group">
+                    <select onchange="pilihBiaya()" class="custom-select form-control-border" id="jenis_tiket" name="jenis_tiket">
+                      <option value="" hidden>Pilih Jenis Tiket</option>
+                      <option value="LAPAK">LAPAK</option>
+                      <option value="KIOS">KIOS</option>
+                      <option value="MUSIMAN">MUSIMAN</option>
+                    </select>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>BIAYA :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Rp.</span>
+                    </div>
+                    <input type="number" class="form-control" id="biaya" name="biaya" readonly>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>NOMOR KIOS :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="no_kios" name="no_kios">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>KODE KARCIS :</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="kode_karcis" name="kode_karcis">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <button type="submit" class="btn btn-block btn-outline-primary" name="submit-retribusi-lanjutan">Tambah Data Retribusi Selanjudnya</button>
+              </div>
+              <!-- /.card-body -->
+            </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
     <section class="content">
       <div class="container-fluid">
@@ -270,32 +547,37 @@ include '../koneksi/config.php';
                     <th>PASAR</th>
                     <th>TANGGAL</th>
                     <th>JENIS TIKET</th>
+                    <th>BIAYA</th>
                     <th>NOMOR KIOS</th>
                     <th>KODE KARCIS</th>
+                    <th>NIK</th>
+                    <th>NAMA</th>
                     <th>AKSI</th>
                   </tr>
                   </thead>
                   <tbody>
                   <?php 
-                  $query = $koneksi->query("SELECT * FROM tbl_user");
-                  
+                  $query = $koneksi->query("SELECT * FROM tbl_retribusi");
                   $no = 1;
 
                   while($data = $query->fetch_assoc()) :
                   
-                  
-                  
                   ?>
                   <tr>
                     <td><?= $no++;?></td>
+                    <td><?= $data['pasar']; ?></td>
+                    <td><?= $data['tanggal']; ?></td>
+                    <td><?= $data['jenis_tiket']; ?></td>
+                    <td><?= $data['biaya']; ?></td>
+                    <td><?= $data['no_kios']; ?></td>
+                    <td><?= $data['kode_karcis']; ?></td>
                     <td><?= $data['nik']; ?></td>
-                    <td><?= $data['nama']; ?></td>
-                    <td><?= $data['jabatan']; ?></td>
-                    <td><?= $data['username']; ?></td>
-                    <td><?= $data['password']; ?></td>
+                    <td><?= $data['nama_pegawai']; ?></td>
                     <td>
-                      <a href="data-user.php?id=<?= $data['id_user']; ?>" class="btn btn-outline-primary btn-sm">Edit</a> 
-                      <button onclick="hapus(<?= $data['id_user']; ?>)" class="btn btn-outline-danger btn-sm">Hapus</button>
+                      <a href="data-retribusi.php?id=<?= $data['id_retribusi']; ?>" class="btn btn-outline-primary btn-sm" title="Edit"><i class="fa fa-pen"></i></a> 
+                      <button onclick="hapus(<?= $data['id_retribusi']; ?>)" class="btn btn-outline-danger btn-sm" title="Hapus"><i class="fa fa-trash"></i></button>
+                      <a onclick="return showData('<?= $data['pasar'] ;?>','<?= $data['tanggal'] ;?>')" class="btn btn-outline-warning btn-sm" title="Tambah Data Retrbusi" data-toggle="modal" data-target="#modal-retribusi"><i class="fa fa-plus"></i></a>
+                      <a href="data-retribusi.php?id=<?= $data['id_retribusi']; ?>" class="btn btn-outline-primary btn-sm" title="Download"><i class="fa fa-download"></i></a>
                     </td>
                   </tr>
 
@@ -372,6 +654,9 @@ include '../koneksi/config.php';
       jenis_tiket: {
         required: true,
       },
+      biaya: {
+        required: true,
+      },
       no_kios: {
         required: true,
       },
@@ -388,6 +673,63 @@ include '../koneksi/config.php';
       },
       jenis_tiket: {
         required: "Mohon dipilih jenis tiket nya!",
+      },
+      biaya: {
+        required: "Mohon diisi biaya nya!",
+      },
+      no_kios: {
+        required: "Mohon diisi nomor kios nya!",
+      },
+      kode_karcis: {
+        required: "Mohon diisi kode karcis nya!",
+      },
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+
+  $('#formRetribusi2').validate({
+    rules: {
+      pasar: {
+        required: true,
+      },
+      tanggal: {
+        required: true,
+      },
+      jenis_tiket: {
+        required: true,
+      },
+      biaya: {
+        required: true,
+      },
+      no_kios: {
+        required: true,
+      },
+      kode_karcis: {
+        required: true,
+      },
+    },
+    messages: {
+      pasar: {
+        required: "Mohon dipilih pasar nya!",
+      },
+      tanggal: {
+        required: "Mohon diisi tanggal nya!",
+      },
+      jenis_tiket: {
+        required: "Mohon dipilih jenis tiket nya!",
+      },
+      biaya: {
+        required: "Mohon diisi biaya nya!",
       },
       no_kios: {
         required: "Mohon diisi nomor kios nya!",
@@ -410,9 +752,12 @@ include '../koneksi/config.php';
   });
 });
 
+
+
+
 function hapus(id){
  Swal.fire({
-  title: 'Apakah anda yakin menghapus data ini?',
+  title: 'Apakah anda yakin menghapus data retribusi ini?',
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: '#3085d6',
@@ -420,7 +765,7 @@ function hapus(id){
   confirmButtonText: 'Ya'
 }).then((result) => {
   if (result.isConfirmed) {
-    window.location.href='proses-user/proses_hapus.php?id='+id
+    window.location.href='proses-retribusi/proses_hapus.php?id='+id
   }
 })
 }
