@@ -579,7 +579,7 @@ include '../config/config.php';
                     $biaya = number_format($biayaFirst,2,",",".");
 
                     $originalDate = $data['tanggal'];
-                    $newDate = date("d F Y", strtotime($originalDate));
+                    $newDate = date("l, d F Y", strtotime($originalDate));
                   ?>
                   <tr>
                     <td><?= $no++;?></td>
@@ -595,7 +595,7 @@ include '../config/config.php';
                       <a href="data-retribusi.php?id=<?= $data['id_retribusi']; ?>" class="btn btn-outline-primary btn-sm" title="Edit"><i class="fa fa-pen"></i></a> 
                       <button onclick="hapus(<?= $data['id_retribusi']; ?>)" class="btn btn-outline-danger btn-sm" title="Hapus"><i class="fa fa-trash"></i></button>
                       <a onclick="return showData('<?= $data['pasar'] ;?>','<?= $data['tanggal'] ;?>')" class="btn btn-outline-warning btn-sm" title="Tambah Data Retrbusi" data-toggle="modal" data-target="#modal-retribusi"><i class="fa fa-plus"></i></a>
-                      <a href="data-retribusi.php?id=<?= $data['id_retribusi']; ?>" class="btn btn-outline-primary btn-sm" title="Download"><i class="fa fa-download"></i></a>
+                      <a href="../result-laporan.php?pasar=<?= $data['pasar'];?>&tanggal=<?= $data['tanggal'];?>" class="btn btn-outline-primary btn-sm" title="Download"><i class="fa fa-download"></i></a>
                     </td>
                   </tr>
 
