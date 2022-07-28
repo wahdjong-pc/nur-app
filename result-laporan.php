@@ -10,9 +10,11 @@ $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
 $pasar = $_GET['pasar'];
-$tgl = $_GET['tanggal'];
+$tgl   = $_GET['tanggal'];
+
 $showDataPasar = $koneksi->query("SELECT * FROM tbl_retribusi WHERE pasar='$pasar' AND tanggal='$tgl'");
-$no = 1;
+
+$no    = 1;
 $start = 7;
 
 // Style Text Header
@@ -24,6 +26,24 @@ $styleHeader = [
     ],
     'alignment' => [
         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+    ],
+];
+
+// Style Text Judul
+$styleBoldJudul = [
+    'font' => [
+        'bold' => true,
+        'size' => 12
+    ],
+    'fill' => [
+        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
+        'rotation' => 90,
+        'startColor' => [
+            'argb' => 'C3E5AE',
+        ],
+        'endColor' => [
+            'argb' => 'C3E5AE',
+        ],
     ],
 ];
 
@@ -155,12 +175,12 @@ foreach ($showDataPasar as $data){
  $newDate = date("l, d F Y", strtotime($data['tanggal']));
 
 
- $sheet->setCellValue('C3', ': '.$data['pasar'].'');
- $sheet->setCellValue('C4', ': '.$newDate.'');
+ $sheet->setCellValue('C3', ': '.$data['pasar'].'')->getStyle('C3')->applyFromArray($styleBoldJudul);
+ $sheet->setCellValue('C4', ': '.$newDate.'')->getStyle('C4')->applyFromArray($styleBoldJudul);
 
     $sheet->setCellValue('A' . $start, $no++)->getColumnDimension('A')->setAutoSize(true);
     $sheet->setCellValue('B' . $start, $data['jenis_tiket'])->getColumnDimension('B')->setAutoSize(true);
-    $sheet->setCellValue('C' . $start, $data['biaya'])->getColumnDimension('C')->setAutoSize(true);
+    $sheet->setCellValue('C' . $start, 'Rp. '. number_format($data['biaya'],0,",","."))->getColumnDimension('C')->setAutoSize(true);
     $sheet->setCellValue('D' . $start, $data['no_kios'])->getColumnDimension('D')->setAutoSize(true);
     $sheet->setCellValue('E' . $start, $data['kode_karcis'])->getColumnDimension('E')->setAutoSize(true);
     $sheet->setCellValue('F' . $start,  "'".$data['nik']."'")->getColumnDimension('F')->setAutoSize(true);
@@ -185,6 +205,33 @@ foreach ($showDataPasar as $data){
  $sheet->setCellValue('I10', 'Total Pendapatan');
  $sheet->getStyle('I7:J10')->applyFromArray($stylePendapatanContent);
  $sheet->getStyle('I10:J10')->applyFromArray($styleTotalPendapatan);
+
+
+ $query_jumlah_kios = $koneksi->query("SELECT SUM(biaya) as jumlahKios FROM tbl_retribusi WHERE jenis_tiket='KIOS' AND pasar='$pasar' AND tanggal='$tgl'");
+
+ $pendapatan_kios = mysqli_fetch_assoc($query_jumlah_kios);
+ $jml_kios = $pendapatan_kios['jumlahKios']; 
+
+ $sheet->setCellValue('J7', 'Rp. '. number_format($jml_kios,0,",","."));
+
+ $query_jumlah_lapak = $koneksi->query("SELECT SUM(biaya) as jumlahLapak FROM tbl_retribusi WHERE jenis_tiket='LAPAK' AND pasar='$pasar' AND tanggal='$tgl'");
+
+ $pendapatan_lapak = mysqli_fetch_assoc($query_jumlah_lapak);
+ $jml_lapak = $pendapatan_lapak['jumlahLapak']; 
+
+ $sheet->setCellValue('J8', 'Rp. '. number_format($jml_lapak,0,",","."));
+
+ $query_jumlah_musiman = $koneksi->query("SELECT SUM(biaya) as jumlahMusiman FROM tbl_retribusi WHERE jenis_tiket='MUSIMAN' AND pasar='$pasar' AND tanggal='$tgl'");
+
+ $pendapatan_musiman = mysqli_fetch_assoc($query_jumlah_musiman);
+ $jml_musiman = $pendapatan_musiman['jumlahMusiman']; 
+
+ $sheet->setCellValue('J9', 'Rp. '. number_format($jml_musiman,0,",","."));
+
+ $total_pendapatan = $jml_kios+$jml_lapak+$jml_musiman;
+
+ $sheet->setCellValue('J10', 'Rp. '. number_format($total_pendapatan,2,",","."));
+
 
 
 
