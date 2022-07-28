@@ -23,7 +23,7 @@ if (isset($_POST['submit-retribusi'])) {
   $biaya        = $_POST['biaya'];
   $no_kios      = $_POST['no_kios'];
   $kode_karcis  = $_POST['kode_karcis'];
-  $nik          = "123";
+  $nik          = "1212121212121212";
   $nama_peg     = "Admin";
   
 
