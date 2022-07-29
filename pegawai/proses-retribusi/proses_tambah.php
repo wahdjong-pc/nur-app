@@ -15,6 +15,13 @@
 
 <?php
 include '../../config/config.php';
+session_start();
+if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
+      echo "<script>
+         alert('Maaf anda harus login terlebih dahulu');document.location='../../index.php'
+     </script>";
+     }
+
 
 if (isset($_POST['submit-retribusi'])) {
   $pasar        = $_POST['pasar'];
@@ -23,7 +30,7 @@ if (isset($_POST['submit-retribusi'])) {
   $biaya        = $_POST['biaya'];
   $no_kios      = $_POST['no_kios'];
   $kode_karcis  = $_POST['kode_karcis'];
-  $nik          = "123";
+  $nik          = "1212121212121212";
   $nama_peg     = "Admin";
   
 

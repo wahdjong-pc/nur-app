@@ -14,6 +14,12 @@
 
 <?php
 include '../../config/config.php';
+session_start();
+if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
+      echo "<script>
+         alert('Maaf anda harus login terlebih dahulu');document.location='../../index.php'
+     </script>";
+     }
 
 if (isset($_POST['submit-edit'])) {
 
@@ -23,6 +29,7 @@ if (isset($_POST['submit-edit'])) {
   $jabatan      = $_POST['jabatan'];
   $username     = $_POST['username'];
   $password     = $_POST['password'];
+  $role         = $_POST['role'];
 
   $pass_hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -31,7 +38,8 @@ nik = '$nik',
 nama = '$nama', 
 jabatan = '$jabatan', 
 username = '$username', 
-password = '$pass_hash' WHERE id_pegawai = '$id_pegawai'");
+password = '$pass_hash',
+role = '$role' WHERE id_pegawai = '$id_pegawai'");
 
 if ($query) {
     // pesan jika data berubah

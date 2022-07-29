@@ -15,6 +15,12 @@
 
 <?php
 include '../../config/config.php';
+session_start();
+if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
+      echo "<script>
+         alert('Maaf anda harus login terlebih dahulu');document.location='../../index.php'
+     </script>";
+     }
 
 if (isset($_POST['submit-retribusi'])) {
   $pasar        = $_POST['pasar'];

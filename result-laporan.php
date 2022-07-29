@@ -2,9 +2,16 @@
 $koneksi = new mysqli("localhost","root","","nur-app");
 require 'vendor/autoload.php';
 
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+session_start();
+if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
+   echo "<script>
+     alert('Maaf anda harus login terlebih dahulu');document.location='index.php'
+   </script>";
+}else{
 
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
@@ -243,5 +250,5 @@ header('Content-Disposition: attachment;filename="laporan.xlsx"');
 readfile('laporan.xlsx');
 unlink('laporan.xlsx');
 exit;
-
+}
 ?>

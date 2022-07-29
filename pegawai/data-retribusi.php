@@ -1,11 +1,14 @@
 <?php 
 include '../config/config.php';
 session_start();
+
 if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
       echo "<script>
          alert('Maaf anda harus login terlebih dahulu');document.location='../index.php'
      </script>";
      }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -107,7 +110,7 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
           <a class="d-block"><b><?= $_SESSION['nik']; ?></b></a>
           <a class="d-block"><b><?= $_SESSION['nama']; ?></b></a>
           <a class="d-block"><b><?= $_SESSION['jabatan']; ?></b></a>
-          <a class="d-block"><?= $_SESSION['role']; ?></a>
+          <a class="d-block"><?= $_SESSION['role'];; ?></a>
         </div>
       </div>
 
@@ -128,13 +131,7 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
               </li>
 
               <li class="nav-item">
-                <a href="data-pegawai.php" class="nav-link">
-                  <p>Data Pegawai</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="data-retribusi.html" class="nav-link active">
+                <a href="data-retribusi.php" class="nav-link active">
                   <p>Data Retribusi</p>
                 </a>
               </li>

@@ -1,5 +1,14 @@
 <?php 
 include '../config/config.php';
+session_start();
+if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
+      echo "<script>
+         alert('Maaf anda harus login terlebih dahulu');document.location='../index.php'
+     </script>";
+     }
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -37,7 +46,7 @@ include '../config/config.php';
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+        <a class="nav-link" href="../logout.php" role="button">
           Logout
         </a>
       </li>
@@ -57,8 +66,10 @@ include '../config/config.php';
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a class="d-block"><b>Alexander Pierce</b></a>
-          <a class="d-block">Jabatan</a>
+          <a class="d-block"><b><?= $_SESSION['nik']; ?></b></a>
+          <a class="d-block"><b><?= $_SESSION['nama']; ?></b></a>
+          <a class="d-block"><b><?= $_SESSION['jabatan']; ?></b></a>
+          <a class="d-block"><?= $_SESSION['role']; ?></a>
         </div>
       </div>
 
@@ -163,11 +174,10 @@ include '../config/config.php';
                   <label>JABATAN :</label>
 
                   <div class="input-group">
-                    <select class="custom-select form-control-border" id="jabatan" name="jabatan">
-                      <option value="" hidden>Pilih Jabatan</option>
-                      <option value="Admin Master">Admin Master</option>
-                      <option value="Pegawai">Pegawai</option>
-                    </select>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="jabatan" name="jabatan">
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -194,6 +204,20 @@ include '../config/config.php';
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
                     <input type="password" class="form-control" id="password" name="password">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>ROLE :</label>
+
+                  <div class="input-group">
+                    <select class="custom-select form-control-border" id="role" name="role">
+                      <option value="" hidden>Pilih Role</option>
+                      <option value="Admin Master">Admin Master</option>
+                      <option value="Pegawai">Pegawai</option>
+                    </select>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -255,17 +279,10 @@ include '../config/config.php';
                   <label>JABATAN :</label>
 
                   <div class="input-group">
-                    <select class="custom-select form-control-border" id="jabatan" name="jabatan">
-                    <option value="" hidden>Pilih Jabatan</option>
-                      <?php if ($data_pegawai['jabatan'] == "Admin Master") { ?>
-                        
-                        <option value="Admin Master" selected>Admin Master</option>
-                        <option value="Pegawai">Pegawai</option>
-                      <?php }else{ ?>
-                        <option value="Admin Master" >Admin Master</option>
-                        <option value="Pegawai" selected>Pegawai</option>
-                      <?php } ?>
-                    </select>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="jabatan" name="jabatan" value="<?= $data_pegawai['jabatan']; ?>">
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -292,6 +309,26 @@ include '../config/config.php';
                       <span class="input-group-text"><i class="far fa-dot-circle"></i></span>
                     </div>
                     <input type="password" class="form-control" id="password" name="password">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+
+                <div class="form-group">
+                  <label>ROLE :</label>
+
+                  <div class="input-group">
+                    <select class="custom-select form-control-border" id="role" name="role">
+                    <option value="" hidden>Pilih Role</option>
+                      <?php if ($data_pegawai['role'] == "Admin Master") { ?>
+                        
+                        <option value="Admin Master" selected>Admin Master</option>
+                        <option value="Pegawai">Pegawai</option>
+                      <?php }else{ ?>
+                        <option value="Admin Master" >Admin Master</option>
+                        <option value="Pegawai" selected>Pegawai</option>
+                      <?php } ?>
+                    </select>
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -333,6 +370,7 @@ include '../config/config.php';
                     <th>JABATAN</th>
                     <th>USERNAME</th>
                     <th>PASSWORD</th>
+                    <th>ROLE</th>
                     <th>AKSI</th>
                   </tr>
                   </thead>
@@ -353,6 +391,7 @@ include '../config/config.php';
                     <td><?= $data['jabatan']; ?></td>
                     <td><?= $data['username']; ?></td>
                     <td><?= $data['password']; ?></td>
+                    <td><?= $data['role']; ?></td>
                     <td>
                       <a href="data-pegawai.php?id=<?= $data['id_pegawai']; ?>" class="btn btn-outline-primary btn-sm" title="Edit"><i class="fa fa-pen"></i></a> 
                       <button onclick="hapus(<?= $data['id_pegawai']; ?>)" class="btn btn-outline-danger btn-sm" title="Hapus"><i class="fa fa-trash"></i></button>
@@ -441,6 +480,9 @@ include '../config/config.php';
         required: true,
         minlength: 4
       },
+      role: {
+        required: true,
+      },
     },
     messages: {
       nik: {
@@ -460,6 +502,9 @@ include '../config/config.php';
       password: {
         required: "Mohon diisi password nya!",
         minlength: "minimal 4 karakter"
+      },
+      role: {
+        required: "Mohon dipilih role nya!",
       },
     },
     errorElement: 'span',

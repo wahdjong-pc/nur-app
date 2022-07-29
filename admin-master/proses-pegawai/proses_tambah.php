@@ -15,6 +15,12 @@
 
 <?php
 include '../../config/config.php';
+session_start();
+if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
+      echo "<script>
+         alert('Maaf anda harus login terlebih dahulu');document.location='../../index.php'
+     </script>";
+     }
 
 if (isset($_POST['submit'])) {
   $nik        = $_POST['nik'];
@@ -22,12 +28,13 @@ if (isset($_POST['submit'])) {
   $jabatan    = $_POST['jabatan'];
   $username   = $_POST['username'];
   $password   = $_POST['password'];
+  $role       = $_POST['role'];
 
   
 
   $pass_hash = password_hash($password, PASSWORD_DEFAULT);
 
-  $query = $koneksi->query("INSERT INTO tbl_pegawai(nik,nama,jabatan,username,password) VALUES('$nik', '$nama', '$jabatan', '$username', '$pass_hash')");
+  $query = $koneksi->query("INSERT INTO tbl_pegawai(nik,nama,jabatan,username,password,role) VALUES('$nik', '$nama', '$jabatan', '$username', '$pass_hash', '$role')");
 
 
 if ($query) {

@@ -1,5 +1,6 @@
-<?php
+<?php 
 session_start();
+
 if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
       echo "<script>
          alert('Maaf anda harus login terlebih dahulu');document.location='../index.php'
@@ -24,6 +25,7 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
   <!-- Theme style -->
   <link rel="stylesheet" href="../css/adminlte.min.css">
 </head>
+
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
 <div class="wrapper">
   <!-- Navbar -->
@@ -53,6 +55,8 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
       <span class="brand-text font-weight-light">APP Version 1.0.0</span>
     </a>
 
+    
+
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
@@ -78,12 +82,6 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
               <li class="nav-item">
                 <a href="home.php" class="nav-link active">
                   <p>Home</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="data-pegawai.php" class="nav-link">
-                  <p>Data Pegawai</p>
                 </a>
               </li>
 
