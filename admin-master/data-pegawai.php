@@ -7,9 +7,6 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
      </script>";
      }
 
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
