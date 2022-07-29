@@ -30,8 +30,8 @@ if (isset($_POST['submit-edit-retribusi'])) {
   $biaya          = $_POST['biaya'];
   $no_kios        = $_POST['no_kios'];
   $kode_karcis    = $_POST['kode_karcis'];
-  $nik            = "123";
-  $nama_peg       = "Admin";
+  $nik            = $_SESSION['nik'];
+  $nama_peg       = $_SESSION['nama'];
 
 
 $query = $koneksi->query("UPDATE tbl_retribusi SET 

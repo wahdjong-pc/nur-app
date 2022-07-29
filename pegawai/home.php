@@ -1,4 +1,5 @@
 <?php 
+include '../config/config.php';
 session_start();
 
 if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
@@ -113,7 +114,17 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Home</h1>
+           <?php 
+
+
+            $query_hitung_retribusi = $koneksi->query("SELECT COUNT(*) as jmlRetribusi FROM tbl_retribusi");
+
+            $hasil_retribusi = mysqli_fetch_assoc($query_hitung_retribusi);
+            $jml_retribusi = $hasil_retribusi['jmlRetribusi'];
+           
+           
+           ?>
+            <h1 class="m-0">Selamat datang di aplikasi rekap retribusi.</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -125,29 +136,17 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <br>
-              <div class="inner" style="text-align: center;">
-                <h3 style="font-size: 4rem;">150</h3>
-
-                <p style="font-size: 1.5rem;">Data Pegawai</p>
-              </div>
-              <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
               <br>
               <div class="inner" style="text-align: center;">
-                <h3 style="font-size: 4rem;">53</h3>
+                <h3 style="font-size: 4rem;"><?= $jml_retribusi; ?></h3>
 
                 <p style="font-size: 1.5rem;">Data Retribusi</p>
               </div>
-              <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="data-retribusi.php" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

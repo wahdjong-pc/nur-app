@@ -15,7 +15,7 @@
 <?php 
 include 'config/config.php';
 session_start();
-if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
+if (empty($_POST)) {
       echo "<script>
          alert('Maaf anda harus login terlebih dahulu');document.location='index.php'
      </script>";
