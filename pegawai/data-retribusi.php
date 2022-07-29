@@ -558,7 +558,6 @@ if (empty($_SESSION['nik']) or empty($_SESSION['role'])) {
                 <table id="example1" class="table table-bordered table-hover">
                   <thead>
                     <div class="col-md-1">
-                      <button type="button" class="btn btn-block btn-primary btn-sm">Download Excel</button>
                     </div>
                   <tr>
                     <th style="width: 2%;">NO.</th>
